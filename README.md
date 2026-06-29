@@ -11,6 +11,19 @@
 - 开机自检、仿真联调、实机联调的操作指引
 - 接口全覆盖调用示例（Service / Topic / Action）
 
+## 核心文档（必读）
+
+> **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** 是本仓库的 **ROS 2 运控接口权威参考**，基于 `hl_motion` 源码整理，涵盖模式切换、Topic/Service/Action 定义、调用时序与安全约束。
+>
+> 进行二次开发或联调前，**请先阅读该文档**，再对照 `examples/` 中的示例代码。其他文档（快速开始、运动控制接口摘要等）均为辅助说明，以该文档为准。
+
+| 文档 | 定位 |
+|---|---|
+| **[二开文档（ros2接口部分）](docs/二开文档（ros2接口部分）（26.06.29）.md)** | **主文档**：接口总览、模式说明、详细调用示例、关节名速查 |
+| [快速开始](docs/快速开始.md) | 环境初始化与常用命令速查 |
+| [运动控制接口](docs/运动控制接口.md) | 发布版接口摘要 |
+| [ROS2 自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | `crb_ros_msg` 编译与引用 |
+
 ## 目录说明
 
 - `packages/crb_ros_msg/`：ROS 2 自定义消息包（msg/srv/action）
@@ -72,6 +85,7 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 
 ## 相关文档
 
+- **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** — ROS 2 运控接口主文档（**优先阅读**）
 - `docs/快速开始.md`
 - `docs/二次开发手册.md`
 - `docs/运动控制接口.md`
@@ -92,6 +106,19 @@ This repository provides ROS 2 secondary development assets for CASBOT2, includi
 - Workflow test scripts for core interfaces
 - Scenario guides for boot check, simulation, and real robot validation
 - A full interface usage toolkit (Service / Topic / Action)
+
+## Primary Documentation (Read First)
+
+> **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** is the **authoritative ROS 2 motion-control interface reference** for this repository. It is derived from the `hl_motion` source and covers mode switching, Topic/Service/Action definitions, call sequences, and safety constraints.
+>
+> **Read this document before** secondary development or integration testing, then use the examples under `examples/` as reference implementations. Other docs (quick start, motion API summary, etc.) are supplementary; this document takes precedence.
+
+| Document | Role |
+|---|---|
+| **[二开文档（ros2接口部分）](docs/二开文档（ros2接口部分）（26.06.29）.md)** | **Primary**: interface overview, modes, detailed examples, joint name lookup |
+| [快速开始](docs/快速开始.md) | Environment setup and common commands |
+| [运动控制接口](docs/运动控制接口.md) | Release-edition API summary |
+| [ROS2 自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | Building and using `crb_ros_msg` |
 
 ## Repository Layout
 
@@ -154,6 +181,7 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 
 ## Documentation
 
+- **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** — Primary ROS 2 motion-control interface reference (**read first**)
 - `docs/快速开始.md`
 - `docs/二次开发手册.md`
 - `docs/运动控制接口.md`
