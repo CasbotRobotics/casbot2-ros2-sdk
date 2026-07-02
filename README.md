@@ -2,10 +2,13 @@
 
 中文 | [English](#english)
 
-# CASBOT2 二次开发示例仓库
+# CASBOT2 ROS 2 SDK
 
-本仓库用于 CASBOT2 的 ROS 2 二次开发，包含：
+> **官方 ROS 2 二次开发 SDK** — 基于 ROS 2 Humble，提供消息定义、接口文档与可运行示例，用于 CASBOT2 机器人应用开发。
 
+本仓库是 CASBOT2 的 **ROS 2 SDK**，包含：
+
+- **ROS 2 接口包** `crb_ros_msg`（msg / srv / action）
 - 可直接运行的 C++/Python 示例工程
 - 覆盖核心接口的 workflow 测试脚本
 - 开机自检、仿真联调、实机联调的操作指引
@@ -13,19 +16,29 @@
 
 ## 核心文档（必读）
 
-> **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** 是本仓库的 **ROS 2 运控接口参考**，基于 `hl_motion` 源码整理，涵盖模式切换、Topic/Service/Action 定义、调用时序与安全约束。
->
-> 进行二次开发前，**请先阅读该文档**，再对照 `examples/` 中的示例代码。
-| 文档 | 定位 |
-|---|---|
-| **[二开文档（ros2接口部分）](docs/二开文档（ros2接口部分）（26.06.29）.md)** | **主文档**：接口总览、模式说明、详细调用示例、关节名速查 |
-| [快速开始](docs/快速开始.md) | 环境初始化与常用命令速查 |
-| [运动控制接口](docs/运动控制接口.md) | 发布版接口摘要 |
-| [ROS2 自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | `crb_ros_msg` 编译与引用 |
+建议按以下顺序阅读：
+
+| 文档 | 文件名 | 定位 |
+| --- | --- | --- |
+| [快速开始](docs/ROS2_快速开始.md) | `ROS2_快速开始.md` | 环境初始化与常用命令速查 |
+| [CASBOT02 二次开发手册](docs/CASBOT02_二次开发手册.md) | `CASBOT02_二次开发手册.md` | **总览手册**：整机结构、传感器、SDK 说明、语音/技能/运控应用开发 |
+| [ROS 2 运控接口参考](docs/ROS2_运控接口参考.md) | `ROS2_运控接口参考.md` | **运控主文档**：模式切换、Topic/Service/Action 定义、调用时序与安全约束 |
+| [运动控制接口摘要](docs/ROS2_运动控制接口摘要.md) | `ROS2_运动控制接口摘要.md` | 发布版接口速查表 |
+| [自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | `ROS2_自定义消息包使用指南.md` | `crb_ros_msg` 编译与引用 |
+
+> 运控相关开发请优先阅读 [`ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md)，再结合 `examples/` 中的示例代码联调。
+
+## SDK 组成
+
+| 组件 | 路径 | 说明 |
+| --- | --- | --- |
+| ROS 2 接口包 | `packages/crb_ros_msg/` | SDK 核心：自定义 msg / srv / action |
+| 示例与测试 | `examples/` | C++/Python demo、workflow、场景指引 |
+| 开发文档 | `docs/` | 快速开始、二次开发手册、接口参考等 |
 
 ## 目录说明
 
-- `packages/crb_ros_msg/`：ROS 2 自定义消息包（msg/srv/action）
+- `packages/crb_ros_msg/`：**SDK 核心** — ROS 2 自定义消息包（msg/srv/action）
 - `examples/README.md`：示例总导航（场景、接口、workflow、基础 demo）
 - `examples/cpp/casbot2_cpp_demo/`：C++ 基础 demo 包
 - `examples/python/casbot2_py_demo/`：Python 基础 demo 包
@@ -34,13 +47,13 @@
 - `examples/scenarios/`：开机自检、仿真联调、实机联调
 - `examples/interfaces/README.md`：接口全覆盖说明
 - `examples/interfaces/python/all_interfaces_demo.py`：全接口 Python 调用工具
-- `docs/`：手册、接口、快速开始、发布说明等文档
+- `docs/`：SDK 文档（快速开始、二次开发手册、接口参考等）
 
 ## 环境要求
 
 - Ubuntu 22.04
-- ROS 2 Humble
-- 已安装并可解析 `crb_ros_msg`
+- **ROS 2 Humble**（本 SDK 基于 ROS 2，不支持 ROS 1）
+- 已安装并可解析 SDK 接口包 `crb_ros_msg`
 
 推荐环境初始化：
 
@@ -84,12 +97,12 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 
 ## 相关文档
 
-- **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** — ROS 2 运控接口主文档（**优先阅读**）
-- `docs/快速开始.md`
-- `docs/二次开发手册.md`
-- `docs/运动控制接口.md`
-- `docs/ROS2_自定义消息包使用指南.md`
-- `examples/interfaces/README.md`
+- [`docs/ROS2_快速开始.md`](docs/ROS2_快速开始.md)
+- [`docs/CASBOT02_二次开发手册.md`](docs/CASBOT02_二次开发手册.md)
+- [`docs/ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) — 运控接口主文档（**优先阅读**）
+- [`docs/ROS2_运动控制接口摘要.md`](docs/ROS2_运动控制接口摘要.md)
+- [`docs/ROS2_自定义消息包使用指南.md`](docs/ROS2_自定义消息包使用指南.md)
+- [`examples/interfaces/README.md`](examples/interfaces/README.md)
 
 ---
 
@@ -97,10 +110,13 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 
 [中文](#chinese) | English
 
-# CASBOT2 Secondary Development Examples
+# CASBOT2 ROS 2 SDK
 
-This repository provides ROS 2 secondary development assets for CASBOT2, including:
+> **Official ROS 2 SDK for secondary development** — Built on ROS 2 Humble, providing interface definitions, documentation, and runnable examples for CASBOT2 application development.
 
+This repository is the **ROS 2 SDK** for CASBOT2, including:
+
+- **ROS 2 interface package** `crb_ros_msg` (msg / srv / action)
 - Runnable C++ and Python demo packages
 - Workflow test scripts for core interfaces
 - Scenario guides for boot check, simulation, and real robot validation
@@ -108,20 +124,29 @@ This repository provides ROS 2 secondary development assets for CASBOT2, includi
 
 ## Primary Documentation (Read First)
 
-> **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** is the **authoritative ROS 2 motion-control interface reference** for this repository. It is derived from the `hl_motion` source and covers mode switching, Topic/Service/Action definitions, call sequences, and safety constraints.
->
-> **Read this document before** secondary development or integration testing, then use the examples under `examples/` as reference implementations. Other docs (quick start, motion API summary, etc.) are supplementary; this document takes precedence.
+Recommended reading order:
 
-| Document | Role |
-|---|---|
-| **[二开文档（ros2接口部分）](docs/二开文档（ros2接口部分）（26.06.29）.md)** | **Primary**: interface overview, modes, detailed examples, joint name lookup |
-| [快速开始](docs/快速开始.md) | Environment setup and common commands |
-| [运动控制接口](docs/运动控制接口.md) | Release-edition API summary |
-| [ROS2 自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | Building and using `crb_ros_msg` |
+| Document | Filename | Role |
+| --- | --- | --- |
+| [Quick Start](docs/ROS2_快速开始.md) | `ROS2_快速开始.md` | Environment setup and common commands |
+| [CASBOT02 Development Manual](docs/CASBOT02_二次开发手册.md) | `CASBOT02_二次开发手册.md` | **Overview manual**: robot structure, sensors, SDK overview, voice/skills/motion development |
+| [ROS 2 Motion Control Reference](docs/ROS2_运控接口参考.md) | `ROS2_运控接口参考.md` | **Primary motion doc**: modes, Topic/Service/Action definitions, call sequences, safety |
+| [Motion Control API Summary](docs/ROS2_运动控制接口摘要.md) | `ROS2_运动控制接口摘要.md` | Release-edition API quick reference |
+| [Custom Message Package Guide](docs/ROS2_自定义消息包使用指南.md) | `ROS2_自定义消息包使用指南.md` | Building and using `crb_ros_msg` |
+
+> For motion-control development, read [`ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) first, then use the examples under `examples/` as reference implementations.
+
+## SDK Components
+
+| Component | Path | Description |
+| --- | --- | --- |
+| ROS 2 interface package | `packages/crb_ros_msg/` | SDK core: custom msg / srv / action |
+| Examples & tests | `examples/` | C++/Python demos, workflows, scenario guides |
+| Documentation | `docs/` | Quick start, development manual, API reference |
 
 ## Repository Layout
 
-- `packages/crb_ros_msg/`: ROS 2 custom interface package (`msg` / `srv` / `action`)
+- `packages/crb_ros_msg/`: **SDK core** — ROS 2 custom interface package (`msg` / `srv` / `action`)
 - `examples/README.md`: unified examples index
 - `examples/cpp/casbot2_cpp_demo/`: C++ base demos
 - `examples/python/casbot2_py_demo/`: Python base demos
@@ -130,13 +155,13 @@ This repository provides ROS 2 secondary development assets for CASBOT2, includi
 - `examples/scenarios/`: boot check / simulation / real robot operation guides
 - `examples/interfaces/README.md`: full interface usage guide
 - `examples/interfaces/python/all_interfaces_demo.py`: unified Python interface runner
-- `docs/`: manuals, API docs, quick start, release notes
+- `docs/`: SDK documentation (quick start, development manual, API reference)
 
 ## Requirements
 
 - Ubuntu 22.04
-- ROS 2 Humble
-- `crb_ros_msg` available in your ROS environment
+- **ROS 2 Humble** (this SDK is ROS 2–based; ROS 1 is not supported)
+- SDK interface package `crb_ros_msg` available in your ROS environment
 
 Recommended shell initialization:
 
@@ -180,9 +205,9 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 
 ## Documentation
 
-- **[`docs/二开文档（ros2接口部分）（26.06.29）.md`](docs/二开文档（ros2接口部分）（26.06.29）.md)** — Primary ROS 2 motion-control interface reference (**read first**)
-- `docs/快速开始.md`
-- `docs/二次开发手册.md`
-- `docs/运动控制接口.md`
-- `docs/ROS2_自定义消息包使用指南.md`
-- `examples/interfaces/README.md`
+- [`docs/ROS2_快速开始.md`](docs/ROS2_快速开始.md)
+- [`docs/CASBOT02_二次开发手册.md`](docs/CASBOT02_二次开发手册.md)
+- [`docs/ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) — Primary motion-control interface reference (**read first**)
+- [`docs/ROS2_运动控制接口摘要.md`](docs/ROS2_运动控制接口摘要.md)
+- [`docs/ROS2_自定义消息包使用指南.md`](docs/ROS2_自定义消息包使用指南.md)
+- [`examples/interfaces/README.md`](examples/interfaces/README.md)
