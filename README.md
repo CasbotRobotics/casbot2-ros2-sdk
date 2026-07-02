@@ -23,7 +23,6 @@
 | [快速开始](docs/ROS2_快速开始.md) | `ROS2_快速开始.md` | 环境初始化与常用命令速查 |
 | [CASBOT02 二次开发手册](docs/CASBOT02_二次开发手册.md) | `CASBOT02_二次开发手册.md` | **总览手册**：整机结构、传感器、SDK 说明、语音/技能/运控应用开发 |
 | [ROS 2 运控接口参考](docs/ROS2_运控接口参考.md) | `ROS2_运控接口参考.md` | **运控主文档**：模式切换、Topic/Service/Action 定义、调用时序与安全约束 |
-| [运动控制接口摘要](docs/ROS2_运动控制接口摘要.md) | `ROS2_运动控制接口摘要.md` | 发布版接口速查表 |
 | [自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | `ROS2_自定义消息包使用指南.md` | `crb_ros_msg` 编译与引用 |
 
 > 运控相关开发请优先阅读 [`ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md)，再结合 `examples/` 中的示例代码联调。
@@ -100,7 +99,6 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 - [`docs/ROS2_快速开始.md`](docs/ROS2_快速开始.md)
 - [`docs/CASBOT02_二次开发手册.md`](docs/CASBOT02_二次开发手册.md)
 - [`docs/ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) — 运控接口主文档（**优先阅读**）
-- [`docs/ROS2_运动控制接口摘要.md`](docs/ROS2_运动控制接口摘要.md)
 - [`docs/ROS2_自定义消息包使用指南.md`](docs/ROS2_自定义消息包使用指南.md)
 - [`examples/interfaces/README.md`](examples/interfaces/README.md)
 
@@ -131,7 +129,6 @@ Recommended reading order:
 | [Quick Start](docs/ROS2_快速开始.md) | `ROS2_快速开始.md` | Environment setup and common commands |
 | [CASBOT02 Development Manual](docs/CASBOT02_二次开发手册.md) | `CASBOT02_二次开发手册.md` | **Overview manual**: robot structure, sensors, SDK overview, voice/skills/motion development |
 | [ROS 2 Motion Control Reference](docs/ROS2_运控接口参考.md) | `ROS2_运控接口参考.md` | **Primary motion doc**: modes, Topic/Service/Action definitions, call sequences, safety |
-| [Motion Control API Summary](docs/ROS2_运动控制接口摘要.md) | `ROS2_运动控制接口摘要.md` | Release-edition API quick reference |
 | [Custom Message Package Guide](docs/ROS2_自定义消息包使用指南.md) | `ROS2_自定义消息包使用指南.md` | Building and using `crb_ros_msg` |
 
 > For motion-control development, read [`ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) first, then use the examples under `examples/` as reference implementations.
@@ -208,6 +205,5 @@ python3 examples/interfaces/python/all_interfaces_demo.py --help
 - [`docs/ROS2_快速开始.md`](docs/ROS2_快速开始.md)
 - [`docs/CASBOT02_二次开发手册.md`](docs/CASBOT02_二次开发手册.md)
 - [`docs/ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) — Primary motion-control interface reference (**read first**)
-- [`docs/ROS2_运动控制接口摘要.md`](docs/ROS2_运动控制接口摘要.md)
 - [`docs/ROS2_自定义消息包使用指南.md`](docs/ROS2_自定义消息包使用指南.md)
 - [`examples/interfaces/README.md`](examples/interfaces/README.md)
