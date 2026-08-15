@@ -69,7 +69,7 @@ source install/setup.bash
     --names left_shoulder_pitch_joint,right_shoulder_pitch_joint \
     --positions 0.05,0.05 --vel-scale 0.05
   ```
-- `/motion/joint_cmd` (`JointStateData`)
+- `/motion/joint_cmd` (`JointStateData`，可选 `--kp` / `--kd`)
   ```bash
   python3 examples/interfaces/python/all_interfaces_demo.py pub_whole_cmd \
     --names head_yaw_joint,head_pitch_joint \
@@ -191,7 +191,7 @@ source install/setup.bash
   ```bash
   python3 examples/interfaces/python/all_interfaces_demo.py pub_upper_cmd     --names left_shoulder_pitch_joint,right_shoulder_pitch_joint     --positions 0.05,0.05 --vel-scale 0.05
   ```
-- `/motion/joint_cmd` (`JointStateData`)
+- `/motion/joint_cmd` (`JointStateData`, optional `--kp` / `--kd`)
   ```bash
   python3 examples/interfaces/python/all_interfaces_demo.py pub_whole_cmd     --names head_yaw_joint,head_pitch_joint     --positions 0.1,-0.05
   ```

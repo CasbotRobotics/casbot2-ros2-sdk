@@ -260,7 +260,14 @@ CASBOT02采用的激光雷达是速腾聚创Ariy，且激光雷达是单独接�
 
 如有些客户需要运行自己的导航算法，要求激光雷达直接连接到Orin，需要从Orin读取激光雷达数据。则需在Orin上参照github（https://github\.com/RoboSense\-LiDAR/rslidar\_sdk/?tab=readme\-ov\-file）项目安装激光雷达驱动。
 
+**2\.5\.4\.1 激光雷达数据**
 
+CASBOT02采用的激光雷达是速腾聚创Airy，且激光雷达直接与Orin挂接在同一个网口下（不经过导航控制模块），处于同一个局域网内。二次开发程序能够直接访问到激光雷达的点云及惯导数据，具体topic定义如下表所示：
+
+|**接口名称/功能描述**|**接口参数\(ROS2 topic\)**|**返回值**|**说明**|
+|---|---|---|---|
+|激光雷达原始点云数据|/casbot/rslidar\_points<br>|Type：sensor\_msgs/msg/PointCloud2|Airy雷达原始点云数据|
+|激光雷达IMU惯导数据|/casbot/rslidar\_imu\_data|Type: <br>sensor\_msgs/msg/Imu|Airy雷达内置IMU惯导原始数据<br>|
 
 ### 头显通讯协议
 
@@ -613,7 +620,7 @@ topic name: /upper\_body\_debug/joint\_cmd
 topic type: crb\_ros\_msg::msg::UpperJointData
 
 ```Plain Text
-# UpperJointData.msg
+# UpperJointData.msg - 上半身关节控制（不含灵巧手 kp/kd）
 
 std_msgs/Header header
 
@@ -623,10 +630,15 @@ float32 time_ref
 # 速度比例 [0.0,1.0]
 float32 vel_scale
 
-sensor_msgs/JointState joint
+string[] name
+float64[] position
+float64[] velocity
+float64[] effort
+float64[] kp
+float64[] kd
 ```
 
-可以单帧、离散多帧、连续帧发送以上topic，对上身关节进行关节空间的位置控制。
+可以单帧、离散多帧、连续帧发送以上topic，对上身关节进行关节空间的位置控制。`kp`/`kd` 为可选增益；灵巧手关节不需要填写。默认调试可留空，由运控使用配置文件中的默认增益。
 
 ### 全身关节控制接口
 
@@ -674,6 +686,29 @@ robot模式返回值：
 二开程序可以订阅该话题数据，用于控制robot行走。
 
 - **关节控制接口**
+
+通讯方式：ros2 topic
+
+topic name: /motion/joint\_cmd
+
+topic type: crb\_ros\_msg::msg::JointStateData
+
+反馈话题：/motion/joint\_state（同为 JointStateData，含当前生效 kp/kd）
+
+```Plain Text
+# JointStateData.msg - 关节状态/命令反馈（含当前生效 kp/kd，不含灵巧手 kp/kd）
+
+std_msgs/Header header
+
+string[] name
+float64[] position
+float64[] velocity
+float64[] effort
+float64[] kp
+float64[] kd
+```
+
+`kp`/`kd` 为可选增益。默认调试可留空，由运控使用配置文件中的默认增益；若关闭默认增益，则必须显式下发。灵巧手关节不需要 kp/kd。
 
 
 

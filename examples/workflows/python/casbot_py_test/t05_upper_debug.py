@@ -40,13 +40,17 @@ def main():
         msg.header.frame_id = 'base_link'
         msg.time_ref        = 0.0
         msg.vel_scale       = 0.05  # 极低速度，安全测试
-        msg.joint.name     = ['left_shoulder_pitch_joint', 'right_shoulder_pitch_joint']
-        msg.joint.position = [0.05, 0.05]
+        msg.name     = ['left_shoulder_pitch_joint', 'right_shoulder_pitch_joint']
+        msg.position = [0.05, 0.05]
+        msg.velocity = [0.0, 0.0]
+        msg.effort = [0.0, 0.0]
+        msg.kp = []
+        msg.kd = []
         pub.publish(msg)
         if i % 10 == 0:
             node.get_logger().info(
                 f'[T05] 发布 joint_cmd vel_scale={msg.vel_scale}'
-                f'  pos={msg.joint.position}  frame#{i+1}')
+                f'  pos={msg.position}  frame#{i+1}')
         rclpy.spin_once(node, timeout_sec=0.05)
         rate.sleep()
 

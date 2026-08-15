@@ -14,6 +14,7 @@ find_package(rosidl_default_generators REQUIRED)
 
 set(msg_files
   "msg/UpperJointData.msg"
+  "msg/JointStateData.msg"
   "msg/HlArmState.msg"
   "msg/ArmState.msg"
   "msg/LegState.msg"

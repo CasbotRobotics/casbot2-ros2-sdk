@@ -48,13 +48,15 @@ int main(int argc, char *argv[])
         msg.header.frame_id = "base_link";
         msg.time_ref  = 0.0f;
         msg.vel_scale = 0.05f;  // 极低速度，安全测试
-        msg.joint.name     = {"left_shoulder_pitch_joint", "right_shoulder_pitch_joint"};
-        msg.joint.position = {0.05, 0.05};  // 5° 小幅度
+        msg.name     = {"left_shoulder_pitch_joint", "right_shoulder_pitch_joint"};
+        msg.position = {0.05, 0.05};  // 5° 小幅度
+        msg.velocity = {0.0, 0.0};
+        msg.effort = {0.0, 0.0};
         pub->publish(msg);
         if (i % 10 == 0) {
             RCLCPP_INFO(node->get_logger(),
                 "[T05] 发布 joint_cmd vel_scale=%.2f  left_shoulder=%.3f rad  frame#%d",
-                msg.vel_scale, msg.joint.position[0], i);
+                msg.vel_scale, msg.position[0], i);
         }
         rclcpp::spin_some(node);
         rate.sleep();

@@ -12,19 +12,16 @@ import rclpy
 from rclpy.node import Node
 from std_srvs.srv import SetBool
 from crb_ros_msg.srv import SetRobotMode, GetRobotMode
-from crb_ros_msg.msg import WholeBodyJointData, UpperJointData, JointStateData
-from sensor_msgs.msg import JointState
+from crb_ros_msg.msg import UpperJointData, JointStateData
 
 
 def make_wb_cmd(node, names, positions, kp=None, kd=None):
-    msg = WholeBodyJointData()
+    msg = JointStateData()
     msg.header.stamp = node.get_clock().now().to_msg()
-    js = JointState()
-    js.name = list(names)
-    js.position = list(positions)
-    js.velocity = [0.0] * len(names)
-    js.effort = [0.0] * len(names)
-    msg.joint = js
+    msg.name = list(names)
+    msg.position = list(positions)
+    msg.velocity = [0.0] * len(names)
+    msg.effort = [0.0] * len(names)
     if kp is not None:
         msg.kp = list(kp)
     if kd is not None:
@@ -37,12 +34,10 @@ def make_upper_cmd(node, names, positions, kp=None, kd=None):
     msg.header.stamp = node.get_clock().now().to_msg()
     msg.time_ref = 0.1
     msg.vel_scale = 0.3
-    js = JointState()
-    js.name = list(names)
-    js.position = list(positions)
-    js.velocity = [0.0] * len(names)
-    js.effort = [0.0] * len(names)
-    msg.joint = js
+    msg.name = list(names)
+    msg.position = list(positions)
+    msg.velocity = [0.0] * len(names)
+    msg.effort = [0.0] * len(names)
     if kp is not None:
         msg.kp = list(kp)
     if kd is not None:
@@ -61,11 +56,11 @@ class DebugKpKdTest(Node):
         self.cli_wb = self.create_client(SetBool, '/motion/whole_body_debug')
         self.cli_ub = self.create_client(SetBool, '/motion/upper_body_debug')
 
-        self.wb_pub = self.create_publisher(WholeBodyJointData, '/motion/joint_cmd', 10)
+        self.wb_pub = self.create_publisher(JointStateData, '/motion/joint_cmd', 10)
         self.ub_pub = self.create_publisher(UpperJointData, '/upper_body_debug/joint_cmd', 10)
 
     def _joint_cb(self, msg):
-        self.latest_joint = msg.joint
+        self.latest_joint = msg
 
     def wait_services(self, timeout=10.0):
         deadline = time.time() + timeout
@@ -181,7 +176,7 @@ class DebugKpKdTest(Node):
                 capture_output=True, text=True, timeout=10.0,
             )
             text = out.stdout + out.stderr
-            ok = 'WholeBodyJointData' in text or 'whole_body_joint_data' in text.lower()
+            ok = 'JointStateData' in text or 'joint_state_data' in text.lower()
             return ok, text.strip()
         except Exception as e:
             return False, str(e)

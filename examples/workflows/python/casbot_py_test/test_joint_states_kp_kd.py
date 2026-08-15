@@ -32,8 +32,8 @@ class JointStatePdTest(Node):
         return False
 
     def check_msg(self, msg):
-        n = len(msg.joint.name)
-        ok_len = (len(msg.kp) == n and len(msg.kd) == n and len(msg.joint.position) == n)
+        n = len(msg.name)
+        ok_len = (len(msg.kp) == n and len(msg.kd) == n and len(msg.position) == n)
         has_nonzero = any(abs(k) > 1e-6 for k in msg.kp) and any(abs(k) > 1e-6 for k in msg.kd)
         return ok_len and has_nonzero
 

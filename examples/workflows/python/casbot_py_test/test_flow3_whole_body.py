@@ -2,9 +2,9 @@
 """
 Test Flow 3: 全身调试模式 — 腰部旋转 + 头部运动序列
 接口说明：
-  WHOLE_BODY_DEBUG 模式通过 /motion/joint_cmd (crb_ros_msg/WholeBodyJointData) 接收命令
+  WHOLE_BODY_DEBUG 模式通过 /motion/joint_cmd (crb_ros_msg/JointStateData) 接收命令
   关节名使用 _joint 后缀（与 joint_info.cpp 中 gJointNameToId 一致）
-  name / position / velocity / effort 数组大小必须相同
+  name / position / velocity / effort 数组大小必须相同，kp/kd 可选
 
 流程：
   STAND → WALK → (whole_body_debug true) →
@@ -16,22 +16,19 @@ import rclpy
 from rclpy.node import Node
 from std_srvs.srv import SetBool
 from crb_ros_msg.srv import SetRobotMode, GetRobotMode
-from crb_ros_msg.msg import WholeBodyJointData, JointStateData
-from sensor_msgs.msg import JointState
+from crb_ros_msg.msg import JointStateData
 import time
 
 
 def make_joint_cmd(names, positions, node=None, kp=None, kd=None):
-    """/motion/joint_cmd 要求 WholeBodyJointData，joint 内 name/position/velocity/effort 等长"""
-    msg = WholeBodyJointData()
+    """/motion/joint_cmd 要求 JointStateData，name/position/velocity/effort 等长，kp/kd 可选"""
+    msg = JointStateData()
     if node:
         msg.header.stamp = node.get_clock().now().to_msg()
-    js = JointState()
-    js.name = list(names)
-    js.position = list(positions)
-    js.velocity = [0.0] * len(names)
-    js.effort = [0.0] * len(names)
-    msg.joint = js
+    msg.name = list(names)
+    msg.position = list(positions)
+    msg.velocity = [0.0] * len(names)
+    msg.effort = [0.0] * len(names)
     if kp is not None:
         msg.kp = list(kp)
     if kd is not None:
@@ -51,11 +48,11 @@ class WholeBodyDebugTest(Node):
         self.cli_get_mode = self.create_client(GetRobotMode, '/get_robot_mode')
         self.cli_wb = self.create_client(SetBool, '/motion/whole_body_debug')
 
-        # WHOLE_BODY_DEBUG 使用 /motion/joint_cmd，类型 crb_ros_msg/WholeBodyJointData
-        self.cmd_pub = self.create_publisher(WholeBodyJointData, '/motion/joint_cmd', 10)
+        # WHOLE_BODY_DEBUG 使用 /motion/joint_cmd，类型 crb_ros_msg/JointStateData
+        self.cmd_pub = self.create_publisher(JointStateData, '/motion/joint_cmd', 10)
 
     def _joint_cb(self, msg):
-        self.latest_joint = msg.joint
+        self.latest_joint = msg
 
     def set_mode(self, mode_name: str):
         if not self.cli_set_mode.wait_for_service(timeout_sec=5.0):
@@ -216,7 +213,7 @@ def main():
     print('=' * 60)
     print('  Test Flow 3: 全身调试腰部/头部运动序列')
     print('  WALK → whole_body_debug → 腰转+低头+归零 → STAND')
-    print('  命令话题: /motion/joint_cmd (crb_ros_msg/WholeBodyJointData)')
+    print('  命令话题: /motion/joint_cmd (crb_ros_msg/JointStateData)')
     print('=' * 60)
 
     try:

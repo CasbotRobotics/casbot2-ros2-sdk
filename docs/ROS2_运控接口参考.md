@@ -116,9 +116,10 @@ ros2 service list | grep -E 'motion|robot_mode|robot_state'
 |Service|`/switch_drive_mode`|`std_srvs/srv/SetBool`|→|行走控制权切换（true=导航/false=遥控）|
 |Topic|`/navigation/cmd_vel`|`geometry_msgs/msg/Twist`|→|行走速度指令|
 |Topic|`/upper_body_debug/joint_cmd`|`crb_ros_msg/msg/UpperJointData`|→|上身关节指令|
-|Topic|`/motion/joint_cmd`|`sensor_msgs/msg/JointState`|→|全身关节指令|
-|Topic|`/joint_states`|`sensor_msgs/msg/JointState`|←|全身关节反馈|
-|Topic|`/joint_control`|`sensor_msgs/msg/JointState`|←|运控输出镜像|
+|Topic|`/motion/joint_cmd`|`crb_ros_msg/msg/JointStateData`|→|全身关节指令（可含 kp/kd）|
+|Topic|`/motion/joint_state`|`crb_ros_msg/msg/JointStateData`|←|全身关节反馈（含当前生效 kp/kd）|
+|Topic|`/joint_states`|`sensor_msgs/msg/JointState`|←|全身关节反馈（旧版镜像）|
+|Topic|`/joint_control`|`sensor_msgs/msg/JointState`|←|运控输出镜像（旧版）|
 |Topic|`/imu`|`sensor_msgs/msg/Imu`|←|IMU 数据|
 |Action|`basic_action_play`|`crb_ros_msg/action/BasicActionPlay`|→|预设动作（带反馈）|
 
@@ -743,11 +744,12 @@ ros2 service call /motion/upper_body_debug std_srvs/srv/SetBool "{data: false}"
 std_msgs/Header header
 float32 time_ref    # 参考时间(s)，单帧置 0；多帧插值时填帧间隔
 float32 vel_scale   # 速度缩放 0.0~1.0，首次建议 0.05~0.1
-sensor_msgs/JointState joint
-  string[]  name      # 关节名（仅填需要控制的关节即可）
-  float64[] position  # 目标角度，单位 rad
-  float64[] velocity  # 可不填
-  float64[] effort    # 可不填
+string[]  name      # 关节名（仅填需要控制的关节即可）
+float64[] position  # 目标角度，单位 rad
+float64[] velocity  # 可不填
+float64[] effort    # 可不填
+float64[] kp        # 位置增益（可选；灵巧手不需要）
+float64[] kd        # 速度增益（可选；灵巧手不需要）
 ```
 
 
@@ -756,7 +758,7 @@ sensor_msgs/JointState joint
 
 
 
-> ⚠️ `crb_ros_msg/msg/UpperJointData` 包含嵌套消息，`ros2 topic pub` 直接构造较繁琐，**推荐用 C\+\+ 或 Python 代码发布**。如需命令行快速验证，可用如下方式（仅控制头部关节示例）：
+> ⚠️ 首次联调建议将 `kp`/`kd` 留空，由运控使用默认增益。如需命令行快速验证，可用如下方式（仅控制头部关节示例）：
 > 
 > 
 
@@ -766,9 +768,9 @@ sensor_msgs/JointState joint
 ros2 topic pub --once /upper_body_debug/joint_cmd crb_ros_msg/msg/UpperJointData \
   "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: ''},
     time_ref: 0.0, vel_scale: 0.05,
-    joint: {name: ['head_yaw_joint', 'head_pitch_joint'],
-            position: [0.1, -0.1],
-            velocity: [], effort: []}}"
+    name: ['head_yaw_joint', 'head_pitch_joint'],
+    position: [0.1, -0.1],
+    velocity: [], effort: [], kp: [], kd: []}"
 ```
 
 
@@ -781,7 +783,6 @@ ros2 topic pub --once /upper_body_debug/joint_cmd crb_ros_msg/msg/UpperJointData
 #include <rclcpp/rclcpp.hpp>
 #include <std_srvs/srv/set_bool.hpp>
 #include <crb_ros_msg/msg/upper_joint_data.hpp>
-#include <sensor_msgs/msg/joint_state.hpp>
 
 class UpperBodyController : public rclcpp::Node
 {
@@ -816,8 +817,8 @@ public:
         msg.header.stamp = now();
         msg.time_ref  = 0.0f;
         msg.vel_scale = vel_scale;
-        msg.joint.name     = names;
-        msg.joint.position = positions;
+        msg.name     = names;
+        msg.position = positions;
         joint_pub_->publish(msg);
     }
 
@@ -895,8 +896,8 @@ class UpperBodyController(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.time_ref  = 0.0
         msg.vel_scale = float(vel_scale)
-        msg.joint.name     = names
-        msg.joint.position = [float(p) for p in positions]
+        msg.name     = names
+        msg.position = [float(p) for p in positions]
         self.joint_pub.publish(msg)
 
 rclpy.init()
@@ -940,7 +941,7 @@ rclpy.shutdown()
 
 
 
-全身调试与上身调试类似，Service 名不同，关节指令使用标准 `JointState`。
+全身调试与上身调试类似，Service 名不同，关节指令使用 `crb_ros_msg/msg/JointStateData`（可携带 kp/kd）。
 
 
 
@@ -977,7 +978,7 @@ ros2 service call /motion/whole_body_debug std_srvs/srv/SetBool "{data: false}"
 |---|---|
 |**类型**|Topic（发布）|
 |**名称**|`/motion/joint_cmd`|
-|**类型**|`sensor_msgs/msg/JointState`|
+|**类型**|`crb_ros_msg/msg/JointStateData`|
 
 
 
@@ -991,6 +992,8 @@ string[]  name      # 关节名（见第6节）
 float64[] position  # 目标角度，单位 rad
 float64[] velocity  # 可不填
 float64[] effort    # 可不填
+float64[] kp        # 位置增益（可选；灵巧手不需要）
+float64[] kd        # 速度增益（可选；灵巧手不需要）
 ```
 
 
@@ -1001,11 +1004,11 @@ float64[] effort    # 可不填
 
 ```Bash
 # 控制头部（命令行方式验证）
-ros2 topic pub --once /motion/joint_cmd sensor_msgs/msg/JointState \
+ros2 topic pub --once /motion/joint_cmd crb_ros_msg/msg/JointStateData \
   "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: ''},
     name: ['head_yaw_joint', 'head_pitch_joint'],
     position: [0.1, -0.05],
-    velocity: [], effort: []}"
+    velocity: [], effort: [], kp: [], kd: []}"
 ```
 
 
@@ -1017,7 +1020,7 @@ ros2 topic pub --once /motion/joint_cmd sensor_msgs/msg/JointState \
 ```C++
 #include <rclcpp/rclcpp.hpp>
 #include <std_srvs/srv/set_bool.hpp>
-#include <sensor_msgs/msg/joint_state.hpp>
+#include <crb_ros_msg/msg/joint_state_data.hpp>
 
 class WholeBodyController : public rclcpp::Node
 {
@@ -1026,7 +1029,7 @@ public:
     {
         debug_cli_ = create_client<std_srvs/srv/SetBool>(
             "/motion/whole_body_debug");
-        joint_pub_ = create_publisher<sensor_msgs::msg::JointState>(
+        joint_pub_ = create_publisher<crb_ros_msg::msg::JointStateData>(
             "/motion/joint_cmd", 10);
     }
 
@@ -1047,7 +1050,7 @@ public:
     void sendJointCmd(const std::vector<std::string> &names,
                       const std::vector<double> &positions)
     {
-        sensor_msgs::msg::JointState msg;
+        crb_ros_msg::msg::JointStateData msg;
         msg.header.stamp = now();
         msg.name     = names;
         msg.position = positions;
@@ -1056,7 +1059,7 @@ public:
 
 private:
     rclcpp::Client<std_srvs/srv/SetBool>::SharedPtr debug_cli_;
-    rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr joint_pub_;
+    rclcpp::Publisher<crb_ros_msg::msg::JointStateData>::SharedPtr joint_pub_;
 };
 
 int main(int argc, char *argv[])
@@ -1099,7 +1102,7 @@ int main(int argc, char *argv[])
 import rclpy
 from rclpy.node import Node
 from std_srvs.srv import SetBool
-from sensor_msgs.msg import JointState
+from crb_ros_msg.msg import JointStateData
 import time
 
 class WholeBodyController(Node):
@@ -1107,7 +1110,7 @@ class WholeBodyController(Node):
         super().__init__('whole_body_ctrl')
         self.debug_cli = self.create_client(SetBool, '/motion/whole_body_debug')
         self.joint_pub = self.create_publisher(
-            JointState, '/motion/joint_cmd', 10)
+            JointStateData, '/motion/joint_cmd', 10)
 
     def set_debug_mode(self, enable: bool) -> bool:
         self.debug_cli.wait_for_service(timeout_sec=5.0)
@@ -1118,7 +1121,7 @@ class WholeBodyController(Node):
         return future.result().success if future.result() else False
 
     def send_joint_cmd(self, names: list, positions: list):
-        msg = JointState()
+        msg = JointStateData()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.name     = names
         msg.position = [float(p) for p in positions]
@@ -1476,13 +1479,16 @@ node.shutdown()
 
 |数据|Topic|类型|
 |---|---|---|
-|全身关节反馈|`/joint_states`|`sensor_msgs/msg/JointState`|
-|运控输出镜像|`/joint_control`|`sensor_msgs/msg/JointState`|
+|全身关节反馈（含 kp/kd）|`/motion/joint_state`|`crb_ros_msg/msg/JointStateData`|
+|全身关节反馈（旧版镜像）|`/joint_states`|`sensor_msgs/msg/JointState`|
+|运控输出镜像（旧版）|`/joint_control`|`sensor_msgs/msg/JointState`|
 |IMU|`/imu`|`sensor_msgs/msg/Imu`|
 |头部彩色图|`/camera_head/color/image_raw`|`sensor_msgs/msg/Image`|
 |头部深度图|`/camera_head/depth/image_raw`|`sensor_msgs/msg/Image`|
 |胸部相机|`/camera_chest/color/image_raw`|`sensor_msgs/msg/Image`|
 |点云|`/rslidar_points`|`sensor_msgs/msg/PointCloud2`|
+|点云（直连 Orin）|`/casbot/rslidar_points`|`sensor_msgs/msg/PointCloud2`|
+|雷达 IMU（直连 Orin）|`/casbot/rslidar_imu_data`|`sensor_msgs/msg/Imu`|
 
 
 
@@ -1505,6 +1511,8 @@ ros2 topic hz /joint_states
 ros2 topic hz /imu
 
 # 查看消息定义
+ros2 interface show crb_ros_msg/msg/JointStateData
+ros2 interface show crb_ros_msg/msg/UpperJointData
 ros2 interface show sensor_msgs/msg/JointState
 ros2 interface show crb_ros_msg/msg/RobotState
 ```

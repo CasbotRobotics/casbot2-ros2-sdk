@@ -37,10 +37,10 @@ int main(int argc, char * argv[])
     msg.header.stamp = node->now();
     msg.vel_scale = 0.05f;
     msg.time_ref = 0.0f;
-    msg.joint.name = {"left_shoulder_pitch_joint", "right_shoulder_pitch_joint"};
-    msg.joint.position = {0.05, 0.05};
-    msg.joint.velocity = {0.0, 0.0};
-    msg.joint.effort = {0.0, 0.0};
+    msg.name = {"left_shoulder_pitch_joint", "right_shoulder_pitch_joint"};
+    msg.position = {0.05, 0.05};
+    msg.velocity = {0.0, 0.0};
+    msg.effort = {0.0, 0.0};
     upper_pub->publish(msg);
     RCLCPP_INFO(node->get_logger(), "已发送 upper_body_debug 关节命令");
   }

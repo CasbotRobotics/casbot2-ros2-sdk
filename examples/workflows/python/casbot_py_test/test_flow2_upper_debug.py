@@ -12,7 +12,6 @@ from rclpy.node import Node
 from std_srvs.srv import SetBool
 from crb_ros_msg.srv import SetRobotMode, GetRobotMode
 from crb_ros_msg.msg import UpperJointData, JointStateData
-from sensor_msgs.msg import JointState
 from std_msgs.msg import Header
 import time
 
@@ -72,7 +71,7 @@ class UpperDebugFlowTest(Node):
             UpperJointData, '/upper_body_debug/joint_cmd', 10)
 
     def _arm_cb(self, msg):
-        self.latest_arm = msg.joint
+        self.latest_arm = msg
 
     def set_mode(self, mode_name: str):
         if not self.cli_set_mode.wait_for_service(timeout_sec=5.0):
@@ -132,12 +131,10 @@ class UpperDebugFlowTest(Node):
             msg.header.stamp = self.get_clock().now().to_msg()
             msg.time_ref = 0.1
             msg.vel_scale = 0.3
-            js = JointState()
-            js.name = names
-            js.position = [float(pose_dict[n]) for n in names]
-            js.velocity = [0.0] * len(names)
-            js.effort = [0.0] * len(names)
-            msg.joint = js
+            msg.name = names
+            msg.position = [float(pose_dict[n]) for n in names]
+            msg.velocity = [0.0] * len(names)
+            msg.effort = [0.0] * len(names)
             if kp is not None:
                 msg.kp = list(kp)
             if kd is not None:

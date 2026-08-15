@@ -14,7 +14,7 @@
 
 `crb_ros_msg` 主要内容：
 
-- `msg/`：自定义消息（如 `UpperJointData.msg`、`RobotState.msg`）
+- `msg/`：自定义消息（如 `UpperJointData.msg`、`JointStateData.msg`、`RobotState.msg`）。上身/全身关节指令现为扁平字段，并包含可选 `kp`/`kd`（灵巧手不需要）
 - `srv/`：服务接口（如 `GetRobotMode.srv`、`SetRobotMode.srv`、`Voice.srv`）
 - `action/`：动作接口（如 `BasicActionPlay.action`、`VoicePlay` 对应动作）
 - `CMakeLists.txt`：`rosidl_generate_interfaces(...)` 生成入口
@@ -35,6 +35,7 @@ source install/setup.bash
 ```bash
 ros2 interface list | grep crb_ros_msg
 ros2 interface show crb_ros_msg/msg/UpperJointData
+ros2 interface show crb_ros_msg/msg/JointStateData
 ros2 interface show crb_ros_msg/srv/GetRobotMode
 ros2 interface show crb_ros_msg/action/BasicActionPlay
 ```
@@ -108,7 +109,7 @@ This repository already includes the custom interface package used by CASBOT2:
 
 Main contents of `crb_ros_msg`:
 
-- `msg/`: custom messages (for example, `UpperJointData.msg`, `RobotState.msg`)
+- `msg/`: custom messages (for example, `UpperJointData.msg`, `JointStateData.msg`, `RobotState.msg`). Upper-body and whole-body joint commands now use flat fields and optional `kp`/`kd` (not required for dexterous-hand joints)
 - `srv/`: service definitions (for example, `GetRobotMode.srv`, `SetRobotMode.srv`, `Voice.srv`)
 - `action/`: action definitions (for example, `BasicActionPlay.action`)
 - `CMakeLists.txt`: `rosidl_generate_interfaces(...)` entry
@@ -129,6 +130,7 @@ Verify interfaces:
 ```bash
 ros2 interface list | grep crb_ros_msg
 ros2 interface show crb_ros_msg/msg/UpperJointData
+ros2 interface show crb_ros_msg/msg/JointStateData
 ros2 interface show crb_ros_msg/srv/GetRobotMode
 ros2 interface show crb_ros_msg/action/BasicActionPlay
 ```

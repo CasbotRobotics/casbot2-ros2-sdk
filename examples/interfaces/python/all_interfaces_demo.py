@@ -96,10 +96,12 @@ class InterfaceDemo(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.time_ref = 0.0
         msg.vel_scale = float(vel_scale)
-        msg.joint.name = names
-        msg.joint.position = positions
-        msg.joint.velocity = [0.0] * len(names)
-        msg.joint.effort = [0.0] * len(names)
+        msg.name = names
+        msg.position = positions
+        msg.velocity = [0.0] * len(names)
+        msg.effort = [0.0] * len(names)
+        msg.kp = []
+        msg.kd = []
         pub.publish(msg)
         rclpy.spin_once(self, timeout_sec=0.05)
         print("upper joint cmd 已发送")

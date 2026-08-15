@@ -35,10 +35,12 @@ class DebugJointDemo(Node):
         upper.header.stamp = self.get_clock().now().to_msg()
         upper.time_ref = 0.0
         upper.vel_scale = 0.05
-        upper.joint.name = ["left_shoulder_pitch_joint", "right_shoulder_pitch_joint"]
-        upper.joint.position = [0.05, 0.05]
-        upper.joint.velocity = [0.0, 0.0]
-        upper.joint.effort = [0.0, 0.0]
+        upper.name = ["left_shoulder_pitch_joint", "right_shoulder_pitch_joint"]
+        upper.position = [0.05, 0.05]
+        upper.velocity = [0.0, 0.0]
+        upper.effort = [0.0, 0.0]
+        upper.kp = []
+        upper.kd = []
         self.upper_pub.publish(upper)
         self.get_logger().info("已发送 upper_body_debug 关节命令")
         self.call_set_bool(self.upper_debug_cli, False)

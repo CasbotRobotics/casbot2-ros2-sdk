@@ -1,9 +1,6 @@
-# UpperJointData.msg - 上半身关节控制（不含灵巧手 kp/kd）
+# JointStateData.msg - 关节状态/命令反馈（含当前生效 kp/kd，不含灵巧手 kp/kd）
 
 std_msgs/Header header
-
-float32 time_ref
-float32 vel_scale
 
 string[] name
 float64[] position
