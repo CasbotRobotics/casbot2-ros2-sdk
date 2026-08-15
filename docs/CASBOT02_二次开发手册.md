@@ -8,7 +8,7 @@
 
 ### 整机结构
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZjEzZDFiZDQzZDNlYzYxMDlkYzI1MWY5NTQ4OGM1N2JfMzJmN2Y4YWE5MjBjMTg4YWU2ZDAyNGZlMGI3OGE0ZDVfSUQ6NzYyNzA4MjczODg0NzI3MjEyN18xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![robot_overview](images/robot_overview.png)
 
 整机身高：160cm，体重：50kg
 
@@ -18,11 +18,11 @@
 
 |头部双目相机|深度相机|前后鱼眼相机|腹部激光雷达|
 |---|---|---|---|
-|![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=NDBmNmFlMWM5Mzg0ZjNkNTRkNzc5NDM5MWY3OWE2YTVfYzJmNzYyNjUxYzAwMWQzOThhZmQ4MjRkZDE0YTk1NjZfSUQ6NzYyNzA4Mjc0MTEyNDg3NzI3M18xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)|![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MzFmMjY5NzhhNDlmMGJkMzk4NTRmZDI1YTE2ZGQ1MmNfMzQ1OGE3NDIwY2Q4M2JiYjAxN2QwYjIwNDY0NTU5ZThfSUQ6NzYyNzA4MjczODYxNjk3ODM2Ml8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)|![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ODhkYWY2YWNmMTRiZjUxNzJhYTI0NmNkNmIyYTNhNjNfYTE0NzZhODFlMWFhNDUzNjI5MzRlZGE1YzIxOTFiNGJfSUQ6NzYyNzA4Mjc0MTkyMTcxMzEyMF8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)|![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MjE3YWNkNmRmNGM1NDU5NzI4NzA4NjYxMjgwNGZmZWNfNGM0OTEzZjljZDZlMDhiMGQzZGFlOTE2M2MxZjcwZGJfSUQ6NzYyNzA4MjczODYwMDQxNDE2OV8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)|
+|![camera_stereo](images/camera_stereo.png)|![camera_depth](images/camera_depth.png)|![camera_fisheye](images/camera_fisheye.png)|![lidar](images/lidar.png)|
 
 总体感知范围
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MDFiY2JlNTVjZTJjMDdiYzNkYWQ0MjlmZThmM2VlMjlfMzc3N2I3MTA1YzNmMDUyYmUxNTg0NWUxZWIzNTg3YmNfSUQ6NzYyNzA4Mjc0MTY5NTIwNDI4Ml8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![sensor_coverage](images/sensor_coverage.png)
 
 
 
@@ -135,7 +135,7 @@ ros2 action send_goal /action_voice_play crb_ros_msg/action/VoicePlay '{"wav_pat
 
 CASBOT02的MIC和Speaker都是连接在HRU上，喇叭和麦克风是一体的，使用lsusb命令查看设备信息如下图所示。
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=Y2U2MTM2ZjdlMzkxZWJjN2IzMTc4OWNiODVlMjZhMTZfZGY4MDczMTcwYmI2ODAzOWY3MWQ4MTdlM2FiODVkNzJfSUQ6NzYyNzA4MjczODQzMjc3MzA3NF8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![mic_speaker](images/mic_speaker.jpg)
 
 ### **预设技能**
 
@@ -203,7 +203,7 @@ ros2 service call /casbot/event_service crb_ros_msg/srv/ActionEvent '{"event_id"
 5\.ros2 action调用播放
 
 
-\[固定音频录制和播放\.mkv\]
+（原文档附有操作视频《固定音频录制和播放》，体积较大，未纳入本仓库）
 
 - 技能定制流程
 
@@ -435,19 +435,19 @@ ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '01010000'\}"
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '0101010F00000000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=NGI1OTRjODc1ZmVjOWI5MDkzYTQzNGRlODlkNGI5ZjVfNTZkZWZjY2E3ODI5ZDI4N2U4ZTUxNjE4NzQ4ZDdjMmVfSUQ6NzY0MjI2MTMyMTU0MzUwMjgwNF8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_01](images/face_display_01.png)
 
 
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '01010D0F00000000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZjkyZmVlOTM4YWU4Mzg2NWIwZGQwZGUyYTM3ZjQyY2ZfMWJhYWIyYWEzMjUwYzkyNGNiZmVkYmUzZDc3YzFlODhfSUQ6NzY0MjI2MTMyMjgzNDcyNjA3Nl8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_02](images/face_display_02.jpg)
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '01010E0F00000000'\}" \-\-once
 
 
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZmE1MTgyNjY5NjJkZmNiY2E5NDdkM2UzZWVmNDJhNWJfZmY3NDQ3NTk2NWNkZGJmMzM0ZGM5M2Y4ODcwODhlNzJfSUQ6NzY0MjI2MTMyNDg3MzQ1MjQ5N18xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_03](images/face_display_03.jpg)
 
 
 
@@ -455,41 +455,41 @@ ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '01010F0F0000
 
 
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=OWQxMTQ1NTczNWM0ZDRjYzQ4MGVmNWQ2OTA5YzZiM2NfYjUyZWEyNjllM2RlMWI0ZDdiMzg1NTc0MjJjNGVlNjNfSUQ6NzY0MjI2MTMyMDY4NDE2MTk4NF8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_04](images/face_display_04.jpg)
 
 
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '0101100F00000000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ODEwM2U0ODcwZGMwYmY5MzBiMzVjNTZhYzkzMmRiYTBfNTlkNWZkOWIyMmQ1NWM5MWI3NmYwNjQ3YTI2MTcwNDdfSUQ6NzY0MjI2MTMyMzg0MTUwNjI2OF8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_05](images/face_display_05.jpg)
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '0101110F00000000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=M2U1YmYyZjQ3YjQ3MDQwZjJkNDUyOGYxOTZlNTVhYzdfNjUwMGJjODYwMWY5OGQyMGVhYmZjZTQyNmIyOWQ3MGZfSUQ6NzY0MjI2MTMyMTMyMTcxMjg2MV8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_06](images/face_display_06.jpg)
 
 
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '0101120F0F0F0000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=Mjg5YzRiNDkzMzg0YTljMGRhNTJkYjNhNzRiNzdlNGZfYmMyNGZjMTEzMDlkZjEwNjQ1YWI4YjFmNGRiNTc5ZDVfSUQ6NzY0MjI2MTMyMTA5MDgxMjg5OF8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_07](images/face_display_07.jpg)
 
 
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '0101130F0F0F0000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MGFkZGE4NzlhZGJhMjgxZjNkZTVkYTZlMDBjNTYyNDBfYjg5OWI3NzgzNmRmZmEwMjdlZjZlOTk2OTIzNTlmNDhfSUQ6NzY0MjI2MTMyMzcyODM0MjIzNl8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_08](images/face_display_08.jpg)
 
 
 
 ros2 topic pub /rcu/mcu/serial\_face std\_msgs/msg/String "\{data: '0101140F0F0F0000'\}" \-\-once
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZWYzOWU1NmUwMWI5MDMxMGI0OTk2MWNhMGJlYjQyMzdfYjAyZDQ4MWFhZDk4ZTY3NjU3OWE0ZGMwYWVhYTJlYzFfSUQ6NzY0MjI2MTMyMzM0MjY0NjQ3N18xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_09](images/face_display_09.jpg)
 
 
 
 模式3
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=NmZkYTRiZGZiZDBiNDQ2NmFiZDcwZjA5ODcxNjA4ZmFfYWQ3NDBhMWQzZmQyMmFhM2JhZDZmZWNiMTM5NWYyZmFfSUQ6NzY1NDkwMjIzMzQ2ODg0OTEyNl8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![face_display_mode3](images/face_display_mode3.jpg)
 
 `01 03 01 02 0F 00 00 0F 00 00 08 07 10 20 60 FC 18 10 20  7D 0F 00 00 14 00 48 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 07 E6 00 EF C7 E7 F0 39 E0 08 09 01 08 28 10 80 44 10 08 10 82 0F C8 50 80 44 E0 08 10 84 08 28 10 80 45 00 07 9E B8 0F C7 E0 80 39 F0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 `
 
@@ -732,17 +732,17 @@ casbot02强化学习环境训练包括train、play、sim2sim，具体详情见�
 
 （2）将amp\_policy\_xxxx\.onnx拷贝到目录/workspace/HLmotion/hl\_config/rl\_model/目录下，如在仿真环境，则需进行docker操作;
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=M2VlYzZjOTgwMTMxYjE0NGY0YzAyOTc4ZDYwNDA2MDZfY2QzZWNiNWUyMTlmNzI2M2IwZjA4YzlhN2FiNGIyZjFfSUQ6NzYyNzA4MjczOTg4Nzg1MjczOV8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![rl_model_dir](images/rl_model_dir.jpg)
 
 （3）更新yaml参数，打开/workspace/HLmotion/hl\_config/rl\_config\.yaml，将amp\_arm节点的model\_file\_path值改为“/workspace/HLmotion/hl\_config/rl\_model/amp\_policy\_xxxx\.onnx”；
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=YmEwMDBmMTAwNjJkZjhkZTAxMzlkZWE3NTM0ZjAwOWRfZjZmODM2ZGJhZDRiYTc4NmU3MWU4OThhYzU1ZTgyN2NfSUQ6NzYyNzA4Mjc0MjI4NjU4NTAyOV8xNzgyOTYxNzYxOjE3ODMwNDgxNjFfVjM)
+![rl_config_yaml](images/rl_config_yaml.png)
 
 操作视频：
 
 
 
-\[2026\-01\-28 10\-31\-54\.mkv\]
+（原文档附有强化学习部署操作视频，体积较大，未纳入本仓库）
 
 
 
