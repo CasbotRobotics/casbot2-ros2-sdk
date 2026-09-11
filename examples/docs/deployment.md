@@ -41,7 +41,7 @@ python -m mkdocs build -f examples/config/mkdocs.yml --strict
 
 ## 第一次接入 RTD Community
 
-1. 登录 Read the Docs Community，导入公开仓库 `CasbotRobotics/casbot2-ros2-sdk`。
+1. 登录 [Read the Docs Community](https://app.readthedocs.org/)，导入公开仓库 `CasbotRobotics/casbot2-ros2-sdk`。
 2. 选择实际使用的项目名，默认分支设为 `main`，在 RTD 项目设置中将配置文件路径指定为 `examples/config/readthedocs.yaml`。
 3. 按平台引导完成 GitHub 集成，触发首次 Build。
 4. 在 Builds 查看依赖安装、生成页和 MkDocs 严格构建结果。
@@ -49,6 +49,19 @@ python -m mkdocs build -f examples/config/mkdocs.yml --strict
 
 `site_url` 使用 RTD 提供的 `READTHEDOCS_CANONICAL_URL`。项目名决定站点地址，不能保证方案中的示例域名一定被分配，也不要沿用个人 demo 域名。
 当前配置不会创建 RTD 项目或修改仓库的 Webhook；这些是托管平台的一次性接入步骤。
+
+导入时使用以下设置，根目录无需增加文件：
+
+| 设置 | 值 |
+| --- | --- |
+| Repository URL | `https://github.com/CasbotRobotics/casbot2-ros2-sdk` |
+| Default branch | `main` |
+| Build configuration file | `examples/config/readthedocs.yaml` |
+| 构建器 | MkDocs，由上述 YAML 指定 |
+| Python | 3.11，由上述 YAML 指定 |
+| 文档可见性 | Public |
+
+配置文件路径的设置方式见 [RTD 自定义配置路径](https://docs.readthedocs.com/platform/stable/guides/setup/monorepo.html)。
 
 ## Webhook 与构建触发
 
@@ -83,6 +96,26 @@ examples/docs/changelog.md
 
 新增接口字段和开发指南所引用的源代码也会改变生成文档，不能只监听 `examples/docs/`。
 没有配置文件过滤时允许 RTD 正常构建，避免首次构建、标签或多提交更新被错误跳过。
+
+使用 GitHub App 集成时，在 RTD 的 Automation Rules 添加构建规则：
+
+| 设置 | 值 |
+| --- | --- |
+| Match | Any version |
+| Version types | Branch、Tag、Pull request |
+| Action | Trigger build for version |
+| Enabled | 开启 |
+
+Changed files 按行填入：
+
+```text
+examples/*
+crb_ros_msg/*
+```
+
+RTD 此处的 `*` 会匹配子目录；这两条覆盖文档、构建配置、生成脚本、示例和接口源文件。
+只修改根 README 或许可证时不触发文档重建。配置规则后手动构建一次 `latest` 验证首次发布。
+启用任何构建规则后，不匹配规则的 Webhook 事件将不再触发构建，详见 [RTD 自动化规则](https://docs.readthedocs.com/platform/stable/automation-rules.html)。
 
 ## Pull Request 预览
 
