@@ -1,0 +1,34 @@
+{
+  "motion_commit": "c3b2902ea53f0267ae3ef12b2fdc178c7162ea54",
+  "messages_commit": "3228d83f5629727eb2a8440bf9fd46c9f9fcedbf",
+  "audited_on": "2026-09-11",
+  "interfaces": {
+    "action/ActionPlayerReset.action": "2478a41198b7b0a7257f9221012f0379549d6d9b2ca5827b415e7acc6516b91e",
+    "action/BasicActionPlay.action": "d530ec0f44d94e4eff6e577fcd68a7a7ca3049f7bda3e6718b1939e01b130610",
+    "action/ExecuteTree.action": "66ad5e20a87d33786c9d11812ecef73358f6a50989de4cd55c07b63901ba3d58",
+    "action/LogOutData.action": "5b84a4b68422b553bd4cddfcb49d9511623e9db0830629d2bd4919d85446d424",
+    "action/Sleep.action": "253c43888481babd221434c6055190581f33d58b78a90e341a4ad0a955b47c58",
+    "msg/ArmState.msg": "05a41f53ec2e81589fb48a8705d825ebc3aeedbd0d692280b44162ed6d32c896",
+    "msg/DexterousHandState.msg": "e5cf38186fd8ffd7b7de6011787dab5ce69be39172957867ca4548f2f1b4e091",
+    "msg/FaultRecord.msg": "41e5006196c22c8b0f7a4a6d0fea59c5a40291359cd4abe197c0d23bccee6a45",
+    "msg/FaultSnapshot.msg": "fb694e6e44fd9d498e41137301615412bdc54f3bbbf7b45f8a2edd0b14d89001",
+    "msg/HeadState.msg": "a13b954dd256b1248eb54483a503f9c57f09ceb7f82672d8dc26a539d7ea48bc",
+    "msg/HlArmState.msg": "05a41f53ec2e81589fb48a8705d825ebc3aeedbd0d692280b44162ed6d32c896",
+    "msg/JointStateData.msg": "a2860af31f5a928d7347fdb49107646396831b8296946945f1f6e56d50508a54",
+    "msg/JoystickCmdReport.msg": "6bb843321f31e1ffa8e9e9af0030d6712c613a373318213f596bbaf9d4da9710",
+    "msg/LegState.msg": "c57261bb5d1a57557ccdad0cd7ae2f231bdf4ff84cdd43cadbd16e744aaa29e6",
+    "msg/NodeStatus.msg": "257f37a0338ac14002e359c9c60ae558ef85ca07f8012e70272c58dbb9dbb3ff",
+    "msg/RobotState.msg": "bcd2de6bfe0f92ff6dd011d0752b2896cd2a429b22b8be694b1c2edc009b1e5a",
+    "msg/UpperJointData.msg": "ad1ef0fa3a31e5acb6646168612d65f3e462ac347988299845615f9b8285ac7c",
+    "msg/WholeBodyState.msg": "d576de4b0e2e55bd8a9cf4b0eaeb4fbfc7591c2d5bb8489a8dab979aa907968d",
+    "srv/ActionEvent.srv": "96eeb5ee73265f0e02cdddab216580c66b93c3f1b1d9fb11fe60ce3de553e934",
+    "srv/GetRobotMode.srv": "85f2b3c65df384a519866d27185e73aefadc9563b1400291babc369109adbcec",
+    "srv/GetRobotState.srv": "b7b09c38dff8115aa7482aaa14c36bfbfd9ebda87e6da4b73bc887e7132205f5",
+    "srv/SetRobotMode.srv": "fe44e71da245922f2a186bfe3f304ce16faaa3bcf1798d104b0e2fa5b4dacff9",
+    "srv/Voice.srv": "7278290a97be6e0d942673ac53181699d34ed6d6b1ac892c61d100dc5f659dba"
+  },
+  "sdk_extensions": [
+    "action/ActionPlay.action",
+    "srv/SwitchMode.srv"
+  ]
+}

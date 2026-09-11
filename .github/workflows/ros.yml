@@ -1,0 +1,33 @@
+name: ROS 2 SDK
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  humble:
+    runs-on: ubuntu-latest
+    container: ros:humble-ros-base-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build and test dependencies
+        run: |
+          apt-get update
+          apt-get install -y python3-colcon-common-extensions python3-pytest
+          rosdep update --rosdistro humble
+          rosdep install --from-paths crb_ros_msg casbot2_tools casbot2_py_demo casbot2_cpp_demo casbot2_py_tests casbot2_cpp_tests --ignore-src --rosdistro humble -y
+      - name: Build six packages
+        shell: bash
+        run: bash scripts/build.sh --executor sequential
+      - name: Offline contract tests (no robot nodes)
+        shell: bash
+        run: bash scripts/test.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ros-test-results
+          path: |
+            log/
+            build/casbot2_py_tests/pytest.xml

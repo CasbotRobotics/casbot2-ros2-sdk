@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>casbot2_tools</name>
+  <version>0.1.0</version>
+  <description>CASBOT2 ROS 2 command-line interface tools</description>
+  <maintainer email="maintainer@example.com">casbot2-dev</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_python</buildtool_depend>
+  <depend>rclpy</depend>
+  <depend>action_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>crb_ros_msg</depend>
+  <test_depend>python3-pytest</test_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

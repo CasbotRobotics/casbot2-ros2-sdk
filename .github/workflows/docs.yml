@@ -1,0 +1,62 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'casbot2_*/**'
+      - 'CHANGELOG.md'
+      - 'SAFETY.md'
+      - 'SECURITY.md'
+      - 'crb_ros_msg/**'
+      - 'scripts/gen_docs.py'
+      - 'runtime-contract.json'
+      - 'mkdocs.yml'
+      - 'requirements.txt'
+      - '.readthedocs.yaml'
+      - '.github/workflows/docs.yml'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'casbot2_*/**'
+      - 'CHANGELOG.md'
+      - 'SAFETY.md'
+      - 'SECURITY.md'
+      - 'crb_ros_msg/**'
+      - 'scripts/gen_docs.py'
+      - 'runtime-contract.json'
+      - 'mkdocs.yml'
+      - 'requirements.txt'
+      - '.readthedocs.yaml'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install documentation dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Build and validate documentation
+        run: python -m mkdocs build --strict
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdk-documentation
+          path: site/
+          if-no-files-found: error

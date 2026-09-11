@@ -1,209 +1,116 @@
-<a id="chinese"></a>
+# CASBOT2 ROS 2 SDK
 
 中文 | [English](#english)
 
-# CASBOT2 ROS 2 SDK
+CASBOT2 人形机器人官方 ROS 2 二次开发 SDK，面向 **Ubuntu 22.04 + ROS 2 Humble**。
+提供消息接口、C++ / Python 示例、接口工具和仿真／实机联调流程。
 
-> **官方 ROS 2 二次开发 SDK** — 基于 ROS 2 Humble，提供消息定义、接口文档与可运行示例，用于 CASBOT2 机器人应用开发。
-
-本仓库是 CASBOT2 的 **ROS 2 SDK**，包含：
-
-- **ROS 2 接口包** `crb_ros_msg`（msg / srv / action）
-- 可直接运行的 C++/Python 示例工程
-- 覆盖核心接口的 workflow 测试脚本
-- 开机自检、仿真联调、实机联调的操作指引
-- 接口全覆盖调用示例（Service / Topic / Action）
-
-## 核心文档（必读）
-
-建议按以下顺序阅读：
-
-| 文档 | 文件名 | 定位 |
-| --- | --- | --- |
-| [快速开始](docs/ROS2_快速开始.md) | `ROS2_快速开始.md` | 环境初始化与常用命令速查 |
-| [CASBOT02 二次开发手册](docs/CASBOT02_二次开发手册.md) | `CASBOT02_二次开发手册.md` | **总览手册**：整机结构、传感器、SDK 说明、语音/技能/运控应用开发 |
-| [ROS 2 运控接口参考](docs/ROS2_运控接口参考.md) | `ROS2_运控接口参考.md` | **运控主文档**：模式切换、Topic/Service/Action 定义、调用时序与安全约束 |
-| [自定义消息包使用指南](docs/ROS2_自定义消息包使用指南.md) | `ROS2_自定义消息包使用指南.md` | `crb_ros_msg` 编译与引用 |
-
-> 运控相关开发请优先阅读 [`ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md)，再结合 `examples/` 中的示例代码联调。
-
-## SDK 组成
-
-| 组件 | 路径 | 说明 |
-| --- | --- | --- |
-| ROS 2 接口包 | `packages/crb_ros_msg/` | SDK 核心：自定义 msg / srv / action |
-| 示例与测试 | `examples/` | C++/Python demo、workflow、场景指引 |
-| 开发文档 | `docs/` | 快速开始、二次开发手册、接口参考等 |
-
-## 目录说明
-
-- `packages/crb_ros_msg/`：**SDK 核心** — ROS 2 自定义消息包（msg/srv/action）
-- `examples/README.md`：示例总导航（场景、接口、workflow、基础 demo）
-- `examples/cpp/casbot2_cpp_demo/`：C++ 基础 demo 包
-- `examples/python/casbot2_py_demo/`：Python 基础 demo 包
-- `examples/workflows/cpp/casbot_cpp_test/`：C++ workflow 测试工程（t01~t05）
-- `examples/workflows/python/casbot_py_test/`：Python workflow 测试脚本（t01~t05 + test_flow）
-- `examples/scenarios/`：开机自检、仿真联调、实机联调
-- `examples/interfaces/README.md`：接口全覆盖说明
-- `examples/interfaces/python/all_interfaces_demo.py`：全接口 Python 调用工具
-- `docs/`：SDK 文档（快速开始、二次开发手册、接口参考等）
-
-## 环境要求
-
-- Ubuntu 22.04
-- **ROS 2 Humble**（本 SDK 基于 ROS 2，不支持 ROS 1）
-- 已安装并可解析 SDK 接口包 `crb_ros_msg`
-
-推荐环境初始化：
+## 安装与编译
 
 ```bash
+git clone https://github.com/CasbotRobotics/casbot2-ros2-sdk.git
+cd casbot2-ros2-sdk
 source /opt/ros/humble/setup.bash
-source /workspace/prod_casbot02_basic/install/setup.bash 2>/dev/null || true
-source /workspace/HLmotion/setup.bash 2>/dev/null || source /workspace/hl_motion/setup.bash 2>/dev/null || true
-```
-
-## 快速开始
-
-### 1) 运行基础 Python Demo
-
-```bash
-cd examples/python
-colcon build --packages-select casbot2_py_demo
+rosdep install --from-paths crb_ros_msg casbot2_cpp_demo casbot2_py_demo casbot2_tools casbot2_cpp_tests casbot2_py_tests --ignore-src --rosdistro humble -r -y
+colcon build
 source install/setup.bash
-ros2 run casbot2_py_demo control_demo
 ```
 
-### 2) 运行 C++ Workflow Demo
+`rosdep` 应已完成初始化及更新。仓库根目录包含 6 个标准 ROS 2 包，直接 `colcon build` 即可发现并构建全部包。
 
-```bash
-cd examples/workflows/cpp/casbot_cpp_test
-colcon build --packages-select casbot_cpp_test
-source install/setup.bash
-ros2 run casbot_cpp_test t01_get_state
-```
+## 包与入口
 
-### 3) 运行接口全覆盖工具
-
-```bash
-python3 examples/interfaces/python/all_interfaces_demo.py --help
-```
-
-## 安全提示
-
-- 首次联调请从低速、小幅度关节指令开始
-- 每次发控制命令前先确认当前模式
-- 调试模式需有安全员在场，并确保急停可用
-
-## 相关文档
-
-- [`docs/ROS2_快速开始.md`](docs/ROS2_快速开始.md)
-- [`docs/CASBOT02_二次开发手册.md`](docs/CASBOT02_二次开发手册.md)
-- [`docs/ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) — 运控接口主文档（**优先阅读**）
-- [`docs/ROS2_自定义消息包使用指南.md`](docs/ROS2_自定义消息包使用指南.md)
-- [`examples/interfaces/README.md`](examples/interfaces/README.md)
-
----
-
-<a id="english"></a>
-
-[中文](#chinese) | English
-
-# CASBOT2 ROS 2 SDK
-
-> **Official ROS 2 SDK for secondary development** — Built on ROS 2 Humble, providing interface definitions, documentation, and runnable examples for CASBOT2 application development.
-
-This repository is the **ROS 2 SDK** for CASBOT2, including:
-
-- **ROS 2 interface package** `crb_ros_msg` (msg / srv / action)
-- Runnable C++ and Python demo packages
-- Workflow test scripts for core interfaces
-- Scenario guides for boot check, simulation, and real robot validation
-- A full interface usage toolkit (Service / Topic / Action)
-
-## Primary Documentation (Read First)
-
-Recommended reading order:
-
-| Document | Filename | Role |
+| 包 | 职责 | 示例入口 |
 | --- | --- | --- |
-| [Quick Start](docs/ROS2_快速开始.md) | `ROS2_快速开始.md` | Environment setup and common commands |
-| [CASBOT02 Development Manual](docs/CASBOT02_二次开发手册.md) | `CASBOT02_二次开发手册.md` | **Overview manual**: robot structure, sensors, SDK overview, voice/skills/motion development |
-| [ROS 2 Motion Control Reference](docs/ROS2_运控接口参考.md) | `ROS2_运控接口参考.md` | **Primary motion doc**: modes, Topic/Service/Action definitions, call sequences, safety |
-| [Custom Message Package Guide](docs/ROS2_自定义消息包使用指南.md) | `ROS2_自定义消息包使用指南.md` | Building and using `crb_ros_msg` |
+| `crb_ros_msg` | msg / srv / action 接口定义 | `ros2 interface show crb_ros_msg/msg/JointStateData` |
+| `casbot2_cpp_demo` | C++ 基础示例 | `ros2 run casbot2_cpp_demo monitor_topics_demo` |
+| `casbot2_py_demo` | Python 基础示例 | `ros2 run casbot2_py_demo monitor_topics_demo` |
+| `casbot2_tools` | 全接口命令行工具 | `ros2 run casbot2_tools interface_cli --help` |
+| `casbot2_cpp_tests` | C++ 分步联调程序 | `ros2 run casbot2_cpp_tests get_state_test` |
+| `casbot2_py_tests` | Python 分步／流程联调与离线回归 | `ros2 run casbot2_py_tests get_state_test` |
 
-> For motion-control development, read [`ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) first, then use the examples under `examples/` as reference implementations.
+`docs/` 放文档，`scripts/` 放环境加载、构建和测试入口。文件迁移与命令更名见 [CHANGELOG](CHANGELOG.md)。
 
-## SDK Components
+## 首次连接
 
-| Component | Path | Description |
-| --- | --- | --- |
-| ROS 2 interface package | `packages/crb_ros_msg/` | SDK core: custom msg / srv / action |
-| Examples & tests | `examples/` | C++/Python demos, workflows, scenario guides |
-| Documentation | `docs/` | Quick start, development manual, API reference |
+SDK 不包含机器人主程序、MuJoCo Binary、Docker 镜像或模型资源。
+请向对应机器人交付／仿真团队获取匹配版本的仿真包及其启动命令。
+当前仓库尚无经确认的下载地址与专用 launch 文件，详见[仿真快速开始](docs/getting-started/sim.md)。
 
-## Repository Layout
-
-- `packages/crb_ros_msg/`: **SDK core** — ROS 2 custom interface package (`msg` / `srv` / `action`)
-- `examples/README.md`: unified examples index
-- `examples/cpp/casbot2_cpp_demo/`: C++ base demos
-- `examples/python/casbot2_py_demo/`: Python base demos
-- `examples/workflows/cpp/casbot_cpp_test/`: C++ workflow tests (t01~t05)
-- `examples/workflows/python/casbot_py_test/`: Python workflow tests (t01~t05 + test_flow)
-- `examples/scenarios/`: boot check / simulation / real robot operation guides
-- `examples/interfaces/README.md`: full interface usage guide
-- `examples/interfaces/python/all_interfaces_demo.py`: unified Python interface runner
-- `docs/`: SDK documentation (quick start, development manual, API reference)
-
-## Requirements
-
-- Ubuntu 22.04
-- **ROS 2 Humble** (this SDK is ROS 2–based; ROS 1 is not supported)
-- SDK interface package `crb_ros_msg` available in your ROS environment
-
-Recommended shell initialization:
+仿真与实机使用同一套 SDK 和环境加载方式；通信目标由运行中的服务、网络与 DDS 域决定。
 
 ```bash
-source /opt/ros/humble/setup.bash
-source /workspace/prod_casbot02_basic/install/setup.bash 2>/dev/null || true
-source /workspace/HLmotion/setup.bash 2>/dev/null || source /workspace/hl_motion/setup.bash 2>/dev/null || true
+# 示例域号；必须与目标服务配置一致
+export ROS_DOMAIN_ID=72
+# 跨机器／跨容器网络通信使用 0；纯本机隔离可使用 1
+export ROS_LOCALHOST_ONLY=0
+source scripts/setup_env.sh
+ros2 run casbot2_tools interface_cli get_robot_mode
 ```
 
-## Quick Start
+仿真包给出启动命令后，可通过 `bash scripts/start_sim.sh <程序> [参数...]` 加载同一 SDK 环境并启动该程序。
+Docker 启动时还需按交付说明将 DDS 环境变量与网络配置传入容器；宿主机环境不会自动传入容器。
 
-### 1) Run Python base demo
+首次联调先读取状态，再按[运控指南](docs/dev-guide/motion-control.md)执行模式切换与控制。
+运动类示例会驱动机器人，请先阅读 [SAFETY.md](SAFETY.md)。
+`VoicePlay.action` 是配套软件的可选接口，本仓库未包含；缺少时不影响其他示例，音频命令会明确报错。
+
+## 辅助脚本
 
 ```bash
-cd examples/python
-colcon build --packages-select casbot2_py_demo
-source install/setup.bash
-ros2 run casbot2_py_demo control_demo
+source scripts/setup_env.sh
+bash scripts/build.sh
+bash scripts/test.sh
 ```
 
-### 2) Run C++ workflow demo
+`test.sh` 只执行不创建 ROS 节点的离线回归。联调／运动流程通过 `ros2 run` 手动运行。
+更多步骤见[Workflow 测试](docs/testing/workflow.md)。安全问题处理方式见 [SECURITY.md](SECURITY.md)。
+
+## 在线文档
+
+[文档首页](docs/index.md) · [环境准备](docs/getting-started/environment.md) · [接口工具](docs/api/interfaces.md)
 
 ```bash
-cd examples/workflows/cpp/casbot_cpp_test
-colcon build --packages-select casbot_cpp_test
-source install/setup.bash
-ros2 run casbot_cpp_test t01_get_state
+python3.11 -m venv .venv-docs
+source .venv-docs/bin/activate
+python -m pip install -r requirements.txt
+python -m mkdocs serve
 ```
 
-### 3) Run full interface tool
+文档构建独立于 ROS 2，Python 3.11+；默认预览地址为 `http://127.0.0.1:8000/`。
+`python -m mkdocs build --strict` 执行构建检查。
+RTD Community 接入、Webhook、PR 预览和版本说明见[部署指南](docs/deployment.md)。
+正式站点 URL 以维护者完成 RTD 项目接入后的地址为准。
+
+## English
+
+CASBOT2 ROS 2 SDK targets Ubuntu 22.04 and ROS 2 Humble. Clone the repository,
+source ROS 2, install dependencies with `rosdep`, then run `colcon build` from the root.
+All six ROS packages are located directly at the repository root.
+
+Use `ros2 run casbot2_tools interface_cli --help` for the CLI and
+`ros2 run casbot2_py_demo monitor_topics_demo` for a read-only example.
+Python's control entry is now `basic_control_demo`; integration executables use functional names
+such as `get_state_test` in `casbot2_cpp_tests` and `casbot2_py_tests`.
+
+Simulation binaries and robot runtime software are distributed separately by the delivery team.
+Match `ROS_DOMAIN_ID` to the target and use `ROS_LOCALHOST_ONLY=0` across machines.
+The same SDK environment loader serves both simulation and real robots.
+Read [SAFETY.md](SAFETY.md) before running motion examples.
+
+`bash scripts/test.sh` runs offline tests only. Documentation builds use Python 3.11+,
+`requirements.txt`, and MkDocs; see the [documentation maintenance guide](docs/deployment.md).
+
+## 当前运控核对基准 / Runtime baseline
+
+已对照 `hl_motion/main` 的 `c3b2902`（2026-09-07）及其消息子模块 `3228d83` 核对接口。
+23 个公共定义一致，另保留 `ActionPlay`、`SwitchMode` 两个历史扩展。
+标准全身 Topic 使用 `sensor_msgs/JointState`；带增益的 Topic 使用 `/motion/debug/` 前缀。
 
 ```bash
-python3 examples/interfaces/python/all_interfaces_demo.py --help
+python3 scripts/check_runtime_contract.py --motion /path/to/hl_motion
+ros2 run casbot2_tools interface_cli doctor
 ```
 
-## Safety Notes
-
-- Start with low speed and small joint commands
-- Always confirm current robot mode before control commands
-- Keep a safety operator and emergency stop ready during debug mode
-
-## Documentation
-
-- [`docs/ROS2_快速开始.md`](docs/ROS2_快速开始.md)
-- [`docs/CASBOT02_二次开发手册.md`](docs/CASBOT02_二次开发手册.md)
-- [`docs/ROS2_运控接口参考.md`](docs/ROS2_运控接口参考.md) — Primary motion-control interface reference (**read first**)
-- [`docs/ROS2_自定义消息包使用指南.md`](docs/ROS2_自定义消息包使用指南.md)
-- [`examples/interfaces/README.md`](examples/interfaces/README.md)
+验证范围和服务端限制见 [兼容性](docs/about/compatibility.md) 与 [运动控制](docs/dev-guide/motion-control.md)。
+本地编译与离线检查不替代 MuJoCo / 实机运动验收。
