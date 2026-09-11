@@ -58,3 +58,14 @@
 - CLI 增加 doctor、输入检查、DDS 发现等待、错误退出码、Action 结果及取消请求处理。
 - Action 示例每次执行单一操作，避免事件入口与直接 Action 重复触发；增益测试改为只读回读。
 - 记录底层导航超时、缓存优先级和 Action 反馈限制；新增可复现的源码契约核查脚本。
+
+- 修正 Python 包的构建依赖：`ament_python` 仅为构建类型，依赖声明改为可解析的 `python3-setuptools`，支持干净环境 `rosdep install`。
+
+## 仓库层级整理 / Repository layout
+
+- 根目录保留 `crb_ros_msg/`；五个配套包统一迁入 `examples/`，与接口包并列展示。
+- 新增 `examples/README.md` 导航，根 README 改为逐节中英对照，保留现有使用说明。
+- 同步文档源码引用、依赖安装路径、测试源码定位与 CI 路径；ROS 包名、入口和接口定义保持不变。
+
+The interface package stays at the root, while examples, tools and test packages move under `examples/`.
+Package names, executables and interface definitions remain unchanged. README sections are presented in Chinese and English.

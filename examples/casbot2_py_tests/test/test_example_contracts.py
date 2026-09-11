@@ -1,7 +1,7 @@
 """Check example contracts against built ROS types without starting ROS nodes.
 
 Run after sourcing ROS 2 and this SDK's install/setup.bash:
-    python3 -m unittest discover -s casbot2_py_tests/test -v
+    python3 -m unittest discover -s examples/casbot2_py_tests/test -v
 """
 
 from contextlib import redirect_stdout
@@ -17,8 +17,8 @@ import unittest
 from crb_ros_msg.srv import ActionEvent, Voice
 
 
-ROOT = Path(__file__).resolve().parents[2]
-CLI = ROOT / 'casbot2_tools/casbot2_tools/interface_cli.py'
+ROOT = Path(__file__).resolve().parents[3]
+CLI = ROOT / 'examples/casbot2_tools/casbot2_tools/interface_cli.py'
 
 
 def load_module(name, path):
@@ -85,7 +85,7 @@ class ExampleContracts(unittest.TestCase):
     def test_action_demo_imports_with_current_interfaces(self):
         module = load_module(
             'action_voice_demo',
-            ROOT / 'casbot2_py_demo/casbot2_py_demo/action_voice_demo.py',
+            ROOT / 'examples/casbot2_py_demo/casbot2_py_demo/action_voice_demo.py',
         )
         self.assertTrue(callable(module.main))
 

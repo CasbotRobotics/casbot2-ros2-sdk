@@ -14,13 +14,13 @@ ActionEvent 用于技能事件，Voice 用于语音服务，BasicActionPlay 用�
 === "C++"
 
     ```cpp
-    --8<-- "casbot2_cpp_demo/src/action_voice_demo.cpp"
+    --8<-- "examples/casbot2_cpp_demo/src/action_voice_demo.cpp"
     ```
 
 === "Python"
 
     ```python
-    --8<-- "casbot2_py_demo/casbot2_py_demo/action_voice_demo.py"
+    --8<-- "examples/casbot2_py_demo/casbot2_py_demo/action_voice_demo.py"
     ```
 
 ## CLI

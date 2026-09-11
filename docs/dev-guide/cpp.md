@@ -9,7 +9,7 @@ source install/setup.bash
 ros2 run casbot2_cpp_demo monitor_topics_demo
 ```
 
-源码位于 [`casbot2_cpp_demo/src/`](https://github.com/CasbotRobotics/casbot2-ros2-sdk/tree/main/casbot2_cpp_demo/src)。
+源码位于 [`examples/casbot2_cpp_demo/src/`](https://github.com/CasbotRobotics/casbot2-ros2-sdk/tree/main/examples/casbot2_cpp_demo/src)。
 
 | 入口 | 用途 |
 | --- | --- |
@@ -60,5 +60,5 @@ ament_target_dependencies(your_target rclcpp crb_ros_msg)
     先确认前置模式、安全员和急停条件。
 
 ```cpp
---8<-- "casbot2_cpp_demo/src/basic_control_demo.cpp"
+--8<-- "examples/casbot2_cpp_demo/src/basic_control_demo.cpp"
 ```

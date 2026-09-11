@@ -6,7 +6,7 @@
   <maintainer email="maintainer@example.com">casbot2-dev</maintainer>
   <license>MIT</license>
 
-  <buildtool_depend>ament_python</buildtool_depend>
+  <buildtool_depend>python3-setuptools</buildtool_depend>
 
   <depend>rclpy</depend>
   <depend>casbot2_tools</depend>

@@ -14,13 +14,13 @@
 === "C++"
 
     ```cpp
-    --8<-- "casbot2_cpp_demo/src/service_mode_demo.cpp"
+    --8<-- "examples/casbot2_cpp_demo/src/service_mode_demo.cpp"
     ```
 
 === "Python"
 
     ```python
-    --8<-- "casbot2_py_demo/casbot2_py_demo/service_mode_demo.py"
+    --8<-- "examples/casbot2_py_demo/casbot2_py_demo/service_mode_demo.py"
     ```
 
 ## CLI

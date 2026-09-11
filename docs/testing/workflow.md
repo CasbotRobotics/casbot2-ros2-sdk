@@ -4,7 +4,7 @@
 
 ## 不连接机器人的回归检查
 
-`casbot2_py_tests/test/` 检查 CLI 帮助、可选音频接口缺失和生成服务类型的响应字段。
+`examples/casbot2_py_tests/test/` 检查 CLI 帮助、可选音频接口缺失和生成服务类型的响应字段。
 先加载 ROS 2 与已编译的 SDK，再运行：
 
 ```bash
@@ -27,13 +27,13 @@ bash scripts/test.sh
 | 4 | `cmd_vel_test.py` | `cmd_vel_test` | 发布速度 |
 | 5 | `upper_body_debug_test.py` | `upper_body_debug_test` | 上身调试 |
 
-Python 程序位于 `casbot2_py_tests/casbot2_py_tests/`：
+Python 程序位于 `examples/casbot2_py_tests/casbot2_py_tests/`：
 
 ```bash
 ros2 run casbot2_py_tests get_state_test
 ```
 
-C++ 包位于 `casbot2_cpp_tests/`，从仓库根目录编译：
+C++ 包位于 `examples/casbot2_cpp_tests/`，从仓库根目录编译：
 
 ```bash
 colcon build --packages-up-to casbot2_cpp_tests

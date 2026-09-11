@@ -9,13 +9,13 @@
 === "C++"
 
     ```cpp
-    --8<-- "casbot2_cpp_tests/src/get_state_test.cpp"
+    --8<-- "examples/casbot2_cpp_tests/src/get_state_test.cpp"
     ```
 
 === "Python"
 
     ```python
-    --8<-- "casbot2_py_tests/casbot2_py_tests/get_state_test.py"
+    --8<-- "examples/casbot2_py_tests/casbot2_py_tests/get_state_test.py"
     ```
 
 ## CLI

@@ -21,10 +21,10 @@ CASBOT2 人形机器人的 ROS 2 二次开发 SDK，提供自定义消息、服�
 | 路径 | 内容 |
 | --- | --- |
 | `crb_ros_msg/` | ROS 2 自定义 msg / srv / action |
-| `casbot2_py_demo/` | Python 示例包 |
-| `casbot2_cpp_demo/` | C++ 示例包 |
-| `casbot2_tools/` | 接口命令行调用工具 |
-| `casbot2_cpp_tests/`、`casbot2_py_tests/` | 需要仿真或实机服务的流程验证程序 |
+| `examples/casbot2_py_demo/` | Python 示例包 |
+| `examples/casbot2_cpp_demo/` | C++ 示例包 |
+| `examples/casbot2_tools/` | 接口命令行调用工具 |
+| `examples/casbot2_cpp_tests/`、`examples/casbot2_py_tests/` | 需要仿真或实机服务的流程验证程序 |
 | `docs/` | 开发文档与在线站点内容 |
 
 SDK 面向 **Ubuntu 22.04 + ROS 2 Humble**。机器人主程序、MuJoCo 仿真程序和模型资源需由配套软件提供；编译本仓库不会启动机器人服务。

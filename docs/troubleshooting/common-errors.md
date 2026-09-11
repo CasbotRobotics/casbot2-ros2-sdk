@@ -46,7 +46,7 @@ ros2 action list -t
 ## colcon build 失败或仍出现旧包
 
 目录迁移后旧构建目录会记录过时的源路径。请使用新的干净工作区重新构建，或先备份再移走旧 `build/`、`install/`、`log/`。
-`colcon list` 应只列出根目录的六个包。不要从同时包含旧版源码副本的上级目录构建。
+`colcon list` 应只列出`crb_ros_msg/` 与 `examples/` 下的六个包。不要从同时包含旧版源码副本的上级目录构建。
 缺少依赖时按安装指南执行 `rosdep install`，不要把文档用的 Python 环境混入 ROS 2 构建终端。
 
 ## Python 找不到入口

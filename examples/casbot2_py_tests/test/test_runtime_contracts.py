@@ -17,7 +17,7 @@ from crb_ros_msg.srv import SetRobotMode
 from casbot2_tools.contracts import TOPICS, SERVICES, pd_by_name, validate_joint_arrays
 from casbot2_tools import interface_cli as cli
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def ready(value):
@@ -38,7 +38,7 @@ class RuntimeContracts(unittest.TestCase):
         expected = {**TOPICS, **SERVICES}
         found = 0
         for directory in ('casbot2_py_demo', 'casbot2_py_tests/casbot2_py_tests', 'casbot2_tools'):
-            for path in (ROOT / directory).rglob('*.py'):
+            for path in (ROOT / 'examples' / directory).rglob('*.py'):
                 if '/test/' in str(path):
                     continue
                 for call in ast.walk(ast.parse(path.read_text())):
@@ -59,7 +59,7 @@ class RuntimeContracts(unittest.TestCase):
     def test_cpp_endpoint_types(self):
         found = 0
         for folder in ('casbot2_cpp_demo', 'casbot2_cpp_tests'):
-            for path in (ROOT / folder).rglob('*.cpp'):
+            for path in (ROOT / 'examples' / folder).rglob('*.cpp'):
                 for kind, cpp_type, topic in re.findall(
                     r'create_(publisher|subscription|client)<([\w:]+)>\(\s*"([^"]+)"', path.read_text()
                 ):
@@ -95,7 +95,7 @@ class RuntimeContracts(unittest.TestCase):
                      ('pub_cmd_vel', '--hz', 'nan'),
                      ('pub_cmd_vel', '--seconds', '-1'),
                      ('pub_whole_cmd', '--names', 'head_yaw_joint', '--positions', '0', '--kp', '1')]:
-            result = subprocess.run([sys.executable, str(ROOT / 'casbot2_tools/casbot2_tools/interface_cli.py'), *args],
+            result = subprocess.run([sys.executable, str(ROOT / 'examples/casbot2_tools/casbot2_tools/interface_cli.py'), *args],
                                     capture_output=True, text=True, timeout=10)
             self.assertEqual(result.returncode, 2, result.stderr)
             self.assertNotIn('Traceback', result.stderr)

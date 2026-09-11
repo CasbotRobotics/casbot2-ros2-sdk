@@ -33,7 +33,7 @@ python -m mkdocs build --strict
 | `docs/` | 按功能分组的 Markdown 与共享图片 |
 | `scripts/gen_docs.py` | 从 `crb_ros_msg/CMakeLists.txt` 注册清单生成三类接口参考与版本页 |
 | `CHANGELOG.md` | 版本说明的唯一维护源 |
-| `casbot2_*/` | 开发指南代码块直接引用的 C++ / Python 源文件 |
+| `examples/` | 开发指南代码块直接引用的 C++ / Python 源文件 |
 
 接口页根据原始定义生成字段表、源码定义、类型构造示例和 CLI 核查命令，不依赖 ROS 2 安装。
 生成文件只存在于构建过程，修改原始 msg/srv/action 后重新构建即可。图中不会将未注册文件描述成可用接口。
@@ -77,7 +77,7 @@ requirements.txt
 .readthedocs.yaml
 scripts/gen_docs.py
 crb_ros_msg/**
-casbot2_*/**
+examples/**
 CHANGELOG.md
 ```
 

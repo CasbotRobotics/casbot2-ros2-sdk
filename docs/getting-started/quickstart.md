@@ -16,10 +16,10 @@ source /opt/ros/humble/setup.bash
 ```bash
 git clone https://github.com/CasbotRobotics/casbot2-ros2-sdk.git
 cd casbot2-ros2-sdk
-rosdep install --from-paths crb_ros_msg casbot2_cpp_demo casbot2_py_demo casbot2_tools casbot2_cpp_tests casbot2_py_tests --ignore-src --rosdistro humble -r -y
+rosdep install --from-paths crb_ros_msg examples --ignore-src --rosdistro humble -r -y
 ```
 
-后续命令均在 **SDK 仓库根目录**执行。6 个 ROS 2 包直接位于仓库根目录，`colcon` 自动扫描。
+后续命令均在 **SDK 仓库根目录**执行。接口包位于 `crb_ros_msg/`，其余 5 个包位于 `examples/`；`colcon` 递归发现全部 6 个包。
 
 ## 3. 构建
 
