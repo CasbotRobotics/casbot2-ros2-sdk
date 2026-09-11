@@ -1,0 +1,124 @@
+site_name: CASBOT2 ROS 2 SDK
+site_description: CASBOT2 人形机器人 ROS 2 二次开发指南与接口参考
+site_url: !ENV [READTHEDOCS_CANONICAL_URL, '']
+repo_url: https://github.com/CasbotRobotics/casbot2-ros2-sdk
+repo_name: CasbotRobotics/casbot2-ros2-sdk
+edit_uri: edit/main/examples/docs/
+docs_dir: ../docs
+site_dir: ../../site
+strict: true
+
+theme:
+  name: material
+  language: zh
+  font: false
+  palette:
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: 切换至暗色模式
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: 切换至亮色模式
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.action.edit
+    - content.code.copy
+    - content.tabs.link
+    - search.suggest
+    - search.highlight
+    - toc.follow
+
+plugins:
+  - search:
+      lang: [zh, en]
+  - mermaid2
+  - git-revision-date-localized:
+      enabled: !ENV [READTHEDOCS, CI, false]
+      type: date
+      locale: zh
+      fallback_to_build_date: true
+  - gen-files:
+      scripts:
+        - ../scripts/gen_docs.py
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets:
+      base_path: ['.']
+      check_paths: true
+  - pymdownx.tabbed:
+      alternate_style: true
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    anchors: warn
+    unrecognized_links: warn
+
+nav:
+  - 首页: index.md
+  - 概述:
+      - SDK 简介: about/index.md
+      - 示例目录: examples.md
+      - 接口总览: about/overview.md
+      - 版本兼容性: about/compatibility.md
+  - 快速开始:
+      - 环境准备: getting-started/environment.md
+      - 安装与编译: getting-started/quickstart.md
+      - 仿真快速开始: getting-started/sim.md
+      - 实机快速开始: getting-started/real.md
+  - 接口参考:
+      - Topic 与消息类型: api/messages.md
+      - Service: api/services.md
+      - Action: api/actions.md
+      - 自定义消息包: api/custom-messages.md
+      - 接口全覆盖: api/interfaces.md
+  - 开发指南:
+      - 二次开发手册: dev-guide/secondary-development.md
+      - Python 示例: dev-guide/python.md
+      - C++ 示例: dev-guide/cpp.md
+      - 状态获取: dev-guide/state.md
+      - 模式切换: dev-guide/mode.md
+      - 运动控制: dev-guide/motion-control.md
+      - 关节调试: dev-guide/debug.md
+      - 动作与语音: dev-guide/action-voice.md
+      - 仿真到实机: dev-guide/sim-to-real.md
+  - 联调与测试:
+      - 开机自检: testing/boot-check.md
+      - 仿真联调: testing/simulation.md
+      - 实机联调: testing/real-robot.md
+      - Workflow 测试: testing/workflow.md
+  - 故障排查: troubleshooting/common-errors.md
+  - 版本说明: changelog.md
+  - 操作安全: safety.md
+  - 安全政策: security.md
+  - 文档维护: deployment.md

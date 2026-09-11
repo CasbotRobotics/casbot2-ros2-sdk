@@ -28,7 +28,7 @@ def ready(value):
 
 class RuntimeContracts(unittest.TestCase):
     def test_message_definitions_match_audited_baseline(self):
-        baseline = json.loads((ROOT / 'runtime-contract.json').read_text())
+        baseline = json.loads((ROOT / 'examples/config/runtime-contract.json').read_text())
         for name, digest in baseline['interfaces'].items():
             with self.subTest(interface=name):
                 self.assertEqual(hashlib.sha256((ROOT / 'crb_ros_msg' / name).read_bytes()).hexdigest(), digest)

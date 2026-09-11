@@ -1,0 +1,63 @@
+# Reference template only; not an active GitHub Actions workflow.
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'examples/docs/**'
+      - 'examples/**'
+      - 'examples/docs/changelog.md'
+      - 'examples/docs/safety.md'
+      - 'examples/docs/security.md'
+      - 'crb_ros_msg/**'
+      - 'examples/scripts/gen_docs.py'
+      - 'examples/config/runtime-contract.json'
+      - 'examples/config/mkdocs.yml'
+      - 'examples/config/requirements.txt'
+      - 'examples/config/readthedocs.yaml'
+      - '.github/workflows/docs.yml'
+  pull_request:
+    paths:
+      - 'examples/docs/**'
+      - 'examples/**'
+      - 'examples/docs/changelog.md'
+      - 'examples/docs/safety.md'
+      - 'examples/docs/security.md'
+      - 'crb_ros_msg/**'
+      - 'examples/scripts/gen_docs.py'
+      - 'examples/config/runtime-contract.json'
+      - 'examples/config/mkdocs.yml'
+      - 'examples/config/requirements.txt'
+      - 'examples/config/readthedocs.yaml'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: examples/config/requirements.txt
+      - name: Install documentation dependencies
+        run: python -m pip install -r examples/config/requirements.txt
+      - name: Build and validate documentation
+        run: python -m mkdocs build -f examples/config/mkdocs.yml --strict
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdk-documentation
+          path: site/
+          if-no-files-found: error

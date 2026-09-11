@@ -1,0 +1,45 @@
+# Reference template only; not an active GitHub Actions workflow.
+name: ROS 2 SDK
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  humble:
+    runs-on: ubuntu-latest
+    container: ros:humble-ros-base-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y python3-colcon-common-extensions python3-pytest
+      - name: Resolve package dependencies
+        shell: bash
+        run: |
+          rosdep update --rosdistro humble
+          if ! rosdep install --from-paths crb_ros_msg examples --ignore-src --rosdistro humble -y > /tmp/sdk-rosdep.log 2>&1; then
+            cat /tmp/sdk-rosdep.log
+            tail -n 15 /tmp/sdk-rosdep.log | while IFS= read -r line; do
+              echo "::error::$line"
+            done
+            exit 1
+          fi
+          cat /tmp/sdk-rosdep.log
+      - name: Build six packages
+        shell: bash
+        run: bash examples/scripts/build.sh --executor sequential
+      - name: Offline contract tests (no robot nodes)
+        shell: bash
+        run: bash examples/scripts/test.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ros-test-results
+          path: |
+            log/
+            build/casbot2_py_tests/pytest.xml
