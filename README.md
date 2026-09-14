@@ -10,7 +10,7 @@
 
 ROS 2 Humble · Ubuntu 22.04 · C++ / Python
 
-[快速开始](#quick-start-cn) · [接口定义](crb_ros_msg/) · [开发示例](examples/) · [开发文档](examples/docs/index.md)
+[在线文档](https://casbot2-ros2-sdk.readthedocs.io/zh-cn/latest/) · [快速开始](#quick-start-cn) · [接口定义](crb_ros_msg/) · [开发示例](examples/)
 
 </div>
 
@@ -126,6 +126,8 @@ bash examples/scripts/test.sh
 
 ## 开发文档
 
+**[打开在线文档 →](https://casbot2-ros2-sdk.readthedocs.io/zh-cn/latest/)**
+
 [文档首页](examples/docs/index.md) · [安装与编译](examples/docs/getting-started/quickstart.md) · [接口工具](examples/docs/api/interfaces.md) · [运动控制](examples/docs/dev-guide/motion-control.md) · [常见问题](examples/docs/troubleshooting/common-errors.md)
 
 文档采用 MkDocs Material，构建独立于 ROS 2，需要 Python 3.11+：
@@ -169,7 +171,7 @@ python3 examples/scripts/check_runtime_contract.py --motion /path/to/hl_motion
 
 ROS 2 Humble · Ubuntu 22.04 · C++ / Python
 
-[Quick Start](#quick-start-en) · [Interfaces](crb_ros_msg/) · [Examples](examples/) · [Documentation](examples/docs/index.md)
+[Online Docs](https://casbot2-ros2-sdk.readthedocs.io/zh-cn/latest/) · [Quick Start](#quick-start-en) · [Interfaces](crb_ros_msg/) · [Examples](examples/)
 
 </div>
 
@@ -284,6 +286,8 @@ bash examples/scripts/test.sh
 `test.sh` runs offline regression tests without creating ROS nodes. Run simulation and robot workflows explicitly with `ros2 run`; see [Workflow Tests](examples/docs/testing/workflow.md).
 
 ## Documentation
+
+**[Open the hosted documentation (Chinese) →](https://casbot2-ros2-sdk.readthedocs.io/zh-cn/latest/)**
 
 [Documentation Home](examples/docs/index.md) · [Installation](examples/docs/getting-started/quickstart.md) · [Interface CLI](examples/docs/api/interfaces.md) · [Motion Control](examples/docs/dev-guide/motion-control.md) · [Troubleshooting](examples/docs/troubleshooting/common-errors.md)
 
