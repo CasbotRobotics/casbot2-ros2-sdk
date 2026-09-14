@@ -27,7 +27,7 @@ python -m mkdocs build -f examples/config/mkdocs.yml --strict
 
 | 属性 | 值 |
 | --- | --- |
-| `examples/config/readthedocs.yaml` | RTD 的操作系统、Python 3.11、依赖安装和 MkDocs 构建配置 |
+| `examples/config/.readthedocs.yaml` | RTD 的操作系统、Python 3.11、依赖安装和 MkDocs 构建配置 |
 | `examples/config/requirements.txt` | 文档依赖，锁定已验证的 MkDocs 1.x 与主题／插件版本 |
 | `examples/config/mkdocs.yml` | 导航、主题、中文搜索、Mermaid、语言 Tab 与生成插件 |
 | `examples/docs/` | 按功能分组的 Markdown 与共享图片 |
@@ -42,7 +42,7 @@ python -m mkdocs build -f examples/config/mkdocs.yml --strict
 ## 第一次接入 RTD Community
 
 1. 登录 [Read the Docs Community](https://app.readthedocs.org/)，导入公开仓库 `CasbotRobotics/casbot2-ros2-sdk`。
-2. 选择实际使用的项目名，默认分支设为 `main`，在 RTD 项目设置中将配置文件路径指定为 `examples/config/readthedocs.yaml`。
+2. 选择实际使用的项目名，默认分支设为 `main`，在 RTD 项目设置中将配置文件路径指定为 `examples/config/.readthedocs.yaml`。
 3. 按平台引导完成 GitHub 集成，触发首次 Build。
 4. 在 Builds 查看依赖安装、生成页和 MkDocs 严格构建结果。
 5. 核对正式站点的图片、Mermaid、中文搜索和源文件编辑链接，再将正式 URL 写入 README。
@@ -56,11 +56,13 @@ python -m mkdocs build -f examples/config/mkdocs.yml --strict
 | --- | --- |
 | Repository URL | `https://github.com/CasbotRobotics/casbot2-ros2-sdk` |
 | Default branch | `main` |
-| Build configuration file | `examples/config/readthedocs.yaml` |
+| Build configuration file | `examples/config/.readthedocs.yaml` |
 | 构建器 | MkDocs，由上述 YAML 指定 |
 | Python | 3.11，由上述 YAML 指定 |
 | 文档可见性 | Public |
 
+RTD 允许自定义目录，但文件名必须为 `.readthedocs.yaml`；`readthedocs.yaml` 会被平台拒绝。
+此文件保留在 `examples/config/` 内，根目录仍只有接口包、示例目录、README 与 LICENSE。
 配置文件路径的设置方式见 [RTD 自定义配置路径](https://docs.readthedocs.com/platform/stable/guides/setup/monorepo.html)。
 
 ## Webhook 与构建触发
@@ -87,7 +89,7 @@ graph TD
 examples/docs/**
 examples/config/mkdocs.yml
 examples/config/requirements.txt
-examples/config/readthedocs.yaml
+examples/config/.readthedocs.yaml
 examples/scripts/gen_docs.py
 crb_ros_msg/**
 examples/**
@@ -133,7 +135,7 @@ RTD 此处的 `*` 会匹配子目录；这两条覆盖文档、构建配置、�
 
 ## 配置模板与本地检查
 
-仓库不再跟踪 `.github/workflows/` 等隐藏配置。原工作流作为普通 YAML 模板保存在
+仓库不配置 `.github/workflows/`。原工作流作为普通 YAML 模板保存在
 `examples/config/workflows/`，不会触发 GitHub Actions。模板中的安装、构建与测试步骤供维护者参考。
 
 本地仍可运行：
@@ -144,7 +146,7 @@ bash examples/scripts/test.sh
 python -m mkdocs build -f examples/config/mkdocs.yml --strict
 ```
 
-Read the Docs 配置同样以普通文件 `examples/config/readthedocs.yaml` 保存。
+Read the Docs 配置以平台要求的文件名 `examples/config/.readthedocs.yaml` 保存。
 若使用 RTD，需要在平台配置自定义配置文件路径；仓库本身不会自动完成托管接入。
 构建产物和本机忽略规则不上传，提交时仅选择源码、文档与配置文件。
 

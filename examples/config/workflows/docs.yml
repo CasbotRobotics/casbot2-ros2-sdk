@@ -15,7 +15,7 @@ on:
       - 'examples/config/runtime-contract.json'
       - 'examples/config/mkdocs.yml'
       - 'examples/config/requirements.txt'
-      - 'examples/config/readthedocs.yaml'
+      - 'examples/config/.readthedocs.yaml'
       - '.github/workflows/docs.yml'
   pull_request:
     paths:
@@ -29,7 +29,7 @@ on:
       - 'examples/config/runtime-contract.json'
       - 'examples/config/mkdocs.yml'
       - 'examples/config/requirements.txt'
-      - 'examples/config/readthedocs.yaml'
+      - 'examples/config/.readthedocs.yaml'
       - '.github/workflows/docs.yml'
   workflow_dispatch:
 

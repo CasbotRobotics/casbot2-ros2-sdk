@@ -77,3 +77,8 @@ Package names, executables and interface definitions remain unchanged. README se
 - 不再跟踪隐藏配置文件；工作流以普通模板保存，不自动运行 GitHub Actions。
 - README 按中文版、英文版分为完整的两个区块，顶部提供互相跳转的语言链接。
 - 同步文档构建配置、脚本路径与契约文件位置，接口定义及客户端实现不变。
+
+## RTD 部署配置校验
+
+- RTD 要求配置文件名必须为 `.readthedocs.yaml`；文件改名并继续保留在 `examples/config/`，根目录布局不变。
+- 更新维护文档与工作流参考模板中的配置路径。
